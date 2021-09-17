@@ -1,0 +1,12 @@
+.alive {
+    background-color: green;
+}
+.damaged {
+    background-color: orange;
+}
+.dead {
+    background-color: red;
+}
+.unplaceable {
+    background-color: grey;
+}

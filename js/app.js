@@ -87,18 +87,28 @@ const shipNames = {
 const shipStats = {
     carrier: {
         length: 5,
+        attack: 1,
+        canons: 1
     },
     battleship: {
         length: 4,
+        attack: 1,
+        canons: 1
     },
     cruiser: {
         length: 3,
+        attack: 1,
+        canons: 1
     },
     submarine: {
         length: 3,
+        attack: 1,
+        canons: 1
     },
     destroyer: {
         length: 2,
+        attack: 1,
+        canons: 1
     },
 }
 
@@ -127,7 +137,7 @@ class Board {
 
 // generic Ship object. may have children classes if more specific battleships are required
 class Ship {
-    constructor(type, name, length, attack, health) {
+    constructor(type, name, length, attack, canons) {
         this.type = type
         this.name = name
         //coordinates of the battleship. The four attributes are required to allow rotating the ship
@@ -136,9 +146,9 @@ class Ship {
         this.right = 0
         this.left = 0
         //attack, canons, and health attribute is provided to allow other game modes once the basic game is constructed
-        this.attack = 1
+        this.attack = attack
         this.health = length
-        this.canons = 1
+        this.canons = canons
 
         this.dead = false
 
@@ -174,7 +184,8 @@ class Player {
                 //generates a ship name by combining the player prefix and the assigned name
                 const shipName = this.prefix + " " + shipNames.asignName()
                 //create ship and add to fleet                
-                const ship = new Ship(shipType, shipName, shipStats[shipType].length)
+                const ship = new Ship(shipType, shipName, 
+                    shipStats[shipType].length, shipStats[shipType].attack, shipStats[shipType].canons)
                 this.fleet.push(ship)
             }
         }
@@ -183,14 +194,17 @@ class Player {
     addShip(type, name) {
         const shipName = this.prefix + " " + name
                 //create ship and add to fleet                
-                const ship = new Ship(type, shipName, shipStats[type].length)
+                const ship = new Ship(type, shipName, 
+                    shipStats[type].length, shipStats[type].attack, shipStats[type].canons)
                 this.fleet.push(ship)
     }
     //calls the names of every ship currently in the players fleet
     rollCall() {
+        console.log("roll call!")
         for (const ship of this.fleet) {
             console.log(`${ship.name} class ${ship.type}`)
         }
+        console.log("")
     }
     //removes ship from fleet
     shipDestroyed(destroyedShipName) {
@@ -208,18 +222,18 @@ class Player {
 const board = new Board(3, 2)
 console.log(board)
 
-const cruiser = new Ship("cruiser", "test", 5)
+const cruiser = new Ship("cruiser", "test", 5, 1, 1)
 console.log(cruiser)
 
-const player1 = new Player("U.S.S.", 1, 1, 1, 1, 1)
+const player1 = new Player("A.W.S.", 1, 1, 1, 1, 1)
 player1.createFleet()
 console.log(player1)
 
 console.log(shipNames.asignName())
 console.log(shipNames.takenNames)
 player1.rollCall()
-player1.addShip("submarine", "test")
-player1.shipDestroyed("U.S.S. test")
+player1.addShip("submarine", "test",)
+player1.shipDestroyed("A.W.S. test")
 // $(() => {
 
 // })
