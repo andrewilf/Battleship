@@ -13,10 +13,10 @@ class DisplayGrid {
             const $columnVisual = $('<div>')//.attr("id", String.fromCharCode(65 + i))
             this.$board.append($columnVisual)
 
-            for (let j = 0; j < this.height; j++) {
+            for (let j = 1; j <= this.height; j++) {
                 // const cell = new Cell()
                 // this.board[i].push(cell)
-                const $gridVisual = $('<div>').addClass("grid")//.attr("id",String.fromCharCode(65 + i)  + j)
+                const $gridVisual = $('<div>').addClass("grid").attr("id",String.fromCharCode(65 + i)  + j)
                 $columnVisual.append($gridVisual)
             }
         }
@@ -25,19 +25,10 @@ class DisplayGrid {
         const $board = $('.grid')
         console.log($board)
         for (let i = 0; i < this.width; i++) {
-            //this.board.push([])
-            // const $columnVisual = $('<div>')//.attr("id", String.fromCharCode(65 + i))
-            // this.$board.append($columnVisual)
-
             for (let j = 0; j < this.height; j++) {
-                // const cell = new Cell()
-                // this.board[i].push(cell)
-                // const $gridVisual = $('<div>').addClass("grid")//.attr("id",String.fromCharCode(65 + i)  + j)
-                // $columnVisual.append($gridVisual)
                 console.log($board.eq(i * this.width + j))
-                //console.log(this.boardObj.board[i][j].occupiedName)
                 if (this.boardObj.board[i][j].occupiedName != "") {
-                    $board.eq(i * this.width + j).addClass("damaged")
+                    $board.eq(i * this.height + j).addClass("damaged")
                 }
             }
         }

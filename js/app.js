@@ -7,7 +7,7 @@ const Display = {
 }
 
 
-const board = new Board(10, 10)   //3 width, 2 height
+const board = new Board(8, 8)   //3 width, 2 height
 console.log(board)
 
 const cruiser = new Ship("cruiser", "test", 5)
