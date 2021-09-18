@@ -10,6 +10,7 @@
     width: 30px;
     flex-flow: row wrap;
     border: 1px solid black;
+    cursor: pointer;
 }
 .alive {
     background-color: green;
@@ -22,4 +23,9 @@
 }
 .unplaceable {
     background-color: grey;
+}
+.ship {
+    background-color: darkmagenta;
+    height: 30px;
+    width: 32px;
 }
