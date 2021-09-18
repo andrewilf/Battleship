@@ -219,7 +219,31 @@ class Player {
     }
 }
 
-const board = new Board(3, 2)
+class DisplayGrid {
+    constructor(gridObj, gridOwner)
+    {
+        this.width = gridObj.board[0].length
+        this.height = gridObj.board.length
+        this.gridOwner = gridOwner
+        this.$grid = $('.container')
+    }
+    generateGrid() {
+        for (let i = 0; i < this.width; i++) {
+            //this.board.push([])
+            const columnVisual = $('<div>').addClass(i)
+            this.$grid.append(columnVisual)
+
+            for (let j = 0; j < this.height; j++) {
+                // const cell = new Cell()
+                // this.board[i].push(cell)
+                const gridVisual = $('<div>').addClass("grid")
+                columnVisual.append(gridVisual)
+            }
+        }
+    }
+}
+
+const board = new Board(10, 10)   //3 width, 2 height
 console.log(board)
 
 const cruiser = new Ship("cruiser", "test", 5, 1, 1)
@@ -234,6 +258,10 @@ console.log(shipNames.takenNames)
 player1.rollCall()
 player1.addShip("submarine", "test",)
 player1.shipDestroyed("A.W.S. test")
-// $(() => {
 
-// })
+graphicBoard = new DisplayGrid(board, "player1")
+graphicBoard.generateGrid()
+$(() => {
+    graphicBoard = new DisplayGrid(board, "player1")
+    graphicBoard.generateGrid()
+})

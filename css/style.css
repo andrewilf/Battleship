@@ -1,3 +1,16 @@
+.container {
+    height: 80%;
+    width: 80%;
+    display:flex;
+    
+}
+.grid {
+    background-color: aqua;
+    height: 20px;
+    width: 20px;
+    flex-flow: row wrap;
+    border: 1px solid black;
+}
 .alive {
     background-color: green;
 }
