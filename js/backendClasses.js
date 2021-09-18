@@ -108,7 +108,13 @@ const shipStats = {
 class Cell {
     constructor() {
         this.shotAt = false
-        this.occupied = false
+        this.occupiedName = ''
+    }
+    shotAt() {
+        this.shotAt = true
+    }
+    occupy(name) {
+        this.occupiedName = name
     }
 }
 
@@ -133,10 +139,10 @@ class Ship {
         this.type = type
         this.name = name
         //coordinates of the battleship. The four attributes are required to allow rotating the ship
-        this.front = Math.ceil(length / 2)
-        this.back = Math.floor(length / 2)
-        this.right = 0.5
-        this.left = 0.5
+        this.front = Math.ceil((length - 1 )/ 2)
+        this.back = Math.floor((length - 1 )/ 2)
+        this.right = 0
+        this.left = 0
         //attack, canons, and health attribute is provided to allow other game modes once the basic game is constructed
         this.attack = attack
         this.health = length
@@ -152,6 +158,38 @@ class Ship {
             return false
         }
         return true
+    }
+    //method rotates the ship clockwise
+    rotateClockwise() {
+        if (this.right === 0) {
+            this.left = this.back
+            this.right = this.front
+            this.front = 0
+            this.back = 0
+            console.log("rotate from vertical")
+        }
+        else {
+            this.back = this.right
+            this.front = this.left
+            this.right = 0
+            this.left = 0
+            console.log("rotate from horizontal")
+        }
+    }
+    //method rotates the ship anti-clockwise
+    rotateAntiClockwise() {
+        if (this.right === 0.5) {
+            this.left = this.front
+            this.right = this.back
+            this.front = 0.5
+            this.back = 0.5
+        }
+        else {
+            this.back = this.left
+            this.front = this.right
+            this.right = 0.5
+            this.left = 0.5
+        }
     }
 }
 
@@ -176,7 +214,7 @@ class Player {
                 //generates a ship name by combining the player prefix and the assigned name
                 const shipName = this.prefix + " " + shipNames.asignName()
                 //create ship and add to fleet                
-                const ship = new Ship(shipType, shipName, 
+                const ship = new Ship(shipType, shipName,
                     shipStats[shipType].length, shipStats[shipType].attack, shipStats[shipType].canons)
                 this.fleet.push(ship)
             }
@@ -185,10 +223,10 @@ class Player {
     //adds a ship to fleet. More for debugging
     addShip(type, name) {
         const shipName = this.prefix + " " + name
-                //create ship and add to fleet                
-                const ship = new Ship(type, shipName, 
-                    shipStats[type].length, shipStats[type].attack, shipStats[type].canons)
-                this.fleet.push(ship)
+        //create ship and add to fleet                
+        const ship = new Ship(type, shipName,
+            shipStats[type].length, shipStats[type].attack, shipStats[type].canons)
+        this.fleet.push(ship)
     }
     //calls the names of every ship currently in the players fleet
     rollCall() {
@@ -201,7 +239,7 @@ class Player {
     //removes ship from fleet
     shipDestroyed(destroyedShipName) {
         const index = this.fleet.findIndex((ship) => ship.name === destroyedShipName)
-        if ( index !== -1) {
+        if (index !== -1) {
             console.log("removing", this.fleet[index])
             this.fleet.splice(index, 1, '')
         }
