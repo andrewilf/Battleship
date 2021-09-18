@@ -35,16 +35,20 @@ class DisplayShip {
     }
     generateShip() {
         const $ship = $('<div>').addClass("ship")
-        $ship.css('height', (this.front + this.back)*32 + "px").draggable({opacity: 0.7, snap: ".grid", snapMode: "outer" })
+        $ship.css('height', (this.front + this.back) * 32 + "px").css('width', (this.right + this.left) * 32 + "px")
+        $ship.draggable({
+            opacity: 0.7, snap: ".grid", snapMode: "outer",
+            cursorAt: { top: (this.front + this.back) * 16, left: (this.left + this.right) * 16 }
+        })
         $('.ships').append($ship)
-        
+
         // $ship.click(function(mouse) {
         //     const drag = setInterval(() => {
         //         $ship.
         //     }, 500)
         // })
 
-       $ship.click(function(mouse) {
+        $ship.click(function (mouse) {
             console.log(mouse.pageX, mouse.pageY);
         })
     }
@@ -52,7 +56,24 @@ class DisplayShip {
 
     }
     rotateShip() {
-
+        if (this.right === 0.5) {
+            this.left = this.front
+            this.right = this.back
+            this.front = 0.5
+            this.back = 0.5
+        }
+        else {
+            this.back = this.right
+            this.front = this.left
+            this.right = 0.5
+            this.left = 0.5
+        }
+        const $ship = $('.ship')
+        $ship.css('height', (this.front + this.back) * 32 + "px").css('width', (this.right + this.left) * 32 + "px")
+        $ship.draggable({
+            opacity: 0.7, snap: ".grid", snapMode: "outer",
+            cursorAt: { top: (this.front + this.back) * 16, left: (this.right + this.left) * 16 }
+        })
     }
 }
 

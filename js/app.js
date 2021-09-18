@@ -10,10 +10,10 @@ const Display = {
 const board = new Board(10, 10)   //3 width, 2 height
 console.log(board)
 
-const cruiser = new Ship("cruiser", "test", 5, 1, 1)
+const cruiser = new Ship("cruiser", "test", 5)
 console.log(cruiser)
 
-const player1 = new Player("A.W.S.", 1, 1, 1, 1, 1)
+const player1 = new Player("A.W.S.")
 player1.createFleet()
 console.log(player1)
 
@@ -28,10 +28,26 @@ graphicBoard.generateGrid()
 $(() => {
     graphicBoard = new DisplayGrid(board, "player1")
     graphicBoard.generateGrid()
-    const $allGrid = $('.grid').hover(hoverOver, hoverOut)
+    //$allGrid = $('.grid').hover(hoverOver, hoverOut)
 
     visualShip = new DisplayShip(cruiser)
     visualShip.generateShip()
+
+    visualShip2 = new DisplayShip(cruiser)
+    visualShip2.generateShip()
+    $('body').scroll(function () {
+        visualShip2.scroll()
+    })
+
+    //visualShip2.rotateShip()
+    $('.ship').on( 'wheel', function(){
+        visualShip2.rotateShip()
+         })
+    // let x = 0;
+
+    // $("div").on( 'wheel', function(){
+    //     console.log('Event Fired');
+    //  });
 
 })
 

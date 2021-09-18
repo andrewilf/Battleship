@@ -129,14 +129,14 @@ class Board {
 
 // generic Ship object. may have children classes if more specific battleships are required
 class Ship {
-    constructor(type, name, length, attack, canons) {
+    constructor(type, name, length, attack = 1, canons = 1) {
         this.type = type
         this.name = name
         //coordinates of the battleship. The four attributes are required to allow rotating the ship
         this.front = Math.ceil(length / 2)
         this.back = Math.floor(length / 2)
-        this.right = 0
-        this.left = 0
+        this.right = 0.5
+        this.left = 0.5
         //attack, canons, and health attribute is provided to allow other game modes once the basic game is constructed
         this.attack = attack
         this.health = length
@@ -157,7 +157,7 @@ class Ship {
 
 //player class
 class Player {
-    constructor(prefix, carriers, battleships, cruisers, submarines, destroyers) {
+    constructor(prefix, carriers = 1, battleships = 1, cruisers = 1, submarines = 1, destroyers = 1) {
         this.prefix = prefix
         this.fleet = []
         this.fleetCount = {
