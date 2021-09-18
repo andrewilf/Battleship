@@ -264,4 +264,14 @@ graphicBoard.generateGrid()
 $(() => {
     graphicBoard = new DisplayGrid(board, "player1")
     graphicBoard.generateGrid()
+    const $allGrid = $('.grid').hover(hoverOver, hoverOut)
 })
+
+
+function hoverOver() {
+    $(this).addClass("unplaceable")
+}
+
+function hoverOut() {
+    $(this).removeClass("unplaceable")
+}
