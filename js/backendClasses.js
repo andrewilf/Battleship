@@ -59,17 +59,17 @@ const shipNames = {
         let done = false
         while (!done) {
             let choice = Math.ceil(Math.random() * this.availableNames.length - 1)
-            console.log(choice)
+            //console.log(choice)
             let currentName = this.availableNames[choice]
             if (this.takenNames.find(name => name === currentName)) {
                 ``
-                console.log("name taken: ", currentName)
+                //console.log("name taken: ", currentName)
             }
             else {
-                console.log("found name")
+                //console.log("found name")
                 this.takenNames.push(currentName)
                 done = true
-                console.log("name available: ", currentName)
+                //console.log("name available: ", currentName)
                 return currentName
             }
         }
@@ -178,17 +178,17 @@ class Ship {
     }
     //method rotates the ship anti-clockwise
     rotateAntiClockwise() {
-        if (this.right === 0.5) {
+        if (this.right === 0) {
             this.left = this.front
             this.right = this.back
-            this.front = 0.5
-            this.back = 0.5
+            this.front = 0
+            this.back = 0
         }
         else {
             this.back = this.left
             this.front = this.right
-            this.right = 0.5
-            this.left = 0.5
+            this.right = 0
+            this.left = 0
         }
     }
 }

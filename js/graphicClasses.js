@@ -42,37 +42,24 @@ class DisplayShip {
 
         $ship.css('height', (midY + 1) * 32 + "px")
             .css('width', midX * 32 + "px")
-
-        $ship.draggable({
+            .draggable({
             opacity: 0.7, snap: ".grid", snapMode: "outer",
-            cursorAt: { top: midY * 16, left: midX * 16 }
-        })
+            cursorAt: { top: (midY + 1) * 16, left: midX * 16 }
+            })
         $('.ships').append($ship)
 
-        // $ship.click(function(mouse) {
-        //     const drag = setInterval(() => {
-        //         $ship.
-        //     }, 500)
-        // })
-
-        // $ship.click(function (mouse) {
-        //     console.log(mouse.pageX, mouse.pageY);
-        // })
-        // $ship.dblclick(() => {
-        //     console.log("asd")
-
-        //     this.regenerateShip(this)
-        // })
     }
     regenerateShip() {
         const $ship = $("#" + this.shipObj.name)
-        if (this.shipObj.right === 0) {
-            const midY = this.shipObj.front + this.shipObj.back
-            const midX = this.shipObj.left + this.shipObj.right + 1
+        let midX
+        let midY
+        if (this.shipObj.right == 0) {
+            midY = this.shipObj.front + this.shipObj.back + 1
+            midX = 1
         }
         else {
-            const midY = this.shipObj.front + this.shipObj.back + 1
-            const midX = this.shipObj.left + this.shipObj.right
+            midY = 1
+            midX = this.shipObj.left + this.shipObj.right + 1
         }
         $ship.css('height', midY * 32 + "px")
             .css('width', midX * 32 + "px")

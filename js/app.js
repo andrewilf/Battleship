@@ -25,10 +25,10 @@ console.log(cruiser)
 
 const player1 = new Player("A.W.S.")
 player1.createFleet()
-console.log(player1)
+// console.log(player1)
 
-console.log(shipNames.asignName())
-console.log(shipNames.takenNames)
+// console.log(shipNames.asignName())
+// console.log(shipNames.takenNames)
 player1.rollCall()
 player1.addShip("submarine", "test",)
 player1.shipDestroyed("A.W.S. test")
@@ -45,11 +45,26 @@ $(() => {
     cruiser.rotateClockwise()
     visualShip.regenerateShip()
     console.log(visualShip)
-    // visualShip2 = new DisplayShip(cruiser)
-    // visualShip2.generateShip()
+    const submarine = new Ship("submarine", "test2", 4)
+    visualShip2 = new DisplayShip(submarine)
+    visualShip2.generateShip()
+    //submarine.rotateAntiClockwise()
+    const fleetTest = [visualShip2, visualShip]
     // console.log(String.fromCharCode(69))
-//     $('.ship').on( 'wheel', function(){
-//         visualShip2.rotateShip()
-//          })
+    $('.ship').on('dblclick', function () {
+        // this.shipObj.rotateClockwise()
+        // this.regenerateShip()
+        //console.log($(this))
+        //console.log($(this).attr('id'))
+        index = fleetTest.findIndex((element) => element.shipObj.name === $(this).attr('id'))
 
+        fleetTest[index].shipObj.rotateClockwise()
+        fleetTest[index].regenerateShip()
+    })
+    $('.ship').on('mousedown', function () {
+        console.log("down")
+    })
+    $('.ship').on('mouseup', function () {
+        console.log("up")
+    })
 })
