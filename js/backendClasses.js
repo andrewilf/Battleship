@@ -131,6 +131,59 @@ class Board {
         }
         console.log(this.board)
     }
+    placeShip(shipObj, middleCoor) {
+        const row = middleCoor[0].charCodeAt(0) - 65
+        const column = middleCoor.substr(1) - 1
+        console.log("row: ", row, "column: ", column)
+        // console.log("row: ", row.charCodeAt(0) - 65, "column: ", column-1)
+        if (!this.board[row][column].occupiedName) {
+            this.board[row][column].occupiedName = shipObj.name
+            console.log(this.board[row][column].occupiedName)
+
+            for (let front = 1; front <= shipObj.front; front++) {
+                if(!this.board[row][column - front].occupiedName) {
+                    this.board[row][column - front].occupiedName = shipObj.name
+                }
+                else {
+                    console.log("occupied")
+                }
+                console.log(this.board[row][column - front].occupiedName)
+            }
+            for (let back = 1; back <= shipObj.back; back++) {
+                if(!this.board[row][column + back].occupiedName) {
+                    this.board[row][column + back].occupiedName = shipObj.name
+                }
+                else {
+                    console.log("occupied")
+                }
+                console.log(this.board[row][column + back].occupiedName)
+            }
+            for (let left = 1; left <= shipObj.left; left++) {
+                if(!this.board[row - left][column].occupiedName) {
+                    this.board[row - left][column].occupiedName = shipObj.name
+                }
+                else {
+                    console.log("occupied")
+                }
+                console.log(this.board[row - left][column].occupiedName)
+            }
+            for (let right = 1; right <= shipObj.right; right++) {
+                if(!this.board[row + right][column].occupiedName) {
+                    this.board[row + right][column].occupiedName = shipObj.name
+                }
+                else {
+                    console.log("occupied")
+                }
+                console.log(this.board[row + right][column].occupiedName)
+            }
+
+            return true
+        }
+        else {
+            console.log("occupied")
+            return false
+        }
+    }
 }
 
 // generic Ship object. may have children classes if more specific battleships are required
@@ -139,8 +192,8 @@ class Ship {
         this.type = type
         this.name = name
         //coordinates of the battleship. The four attributes are required to allow rotating the ship
-        this.front = Math.ceil((length - 1 )/ 2)
-        this.back = Math.floor((length - 1 )/ 2)
+        this.front = Math.ceil((length - 1) / 2)
+        this.back = Math.floor((length - 1) / 2)
         this.right = 0
         this.left = 0
         //attack, canons, and health attribute is provided to allow other game modes once the basic game is constructed

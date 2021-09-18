@@ -1,10 +1,11 @@
 class DisplayGrid {
-    constructor(gridObj, gridOwner) {
-        this.width = gridObj.board[0].length
-        this.height = gridObj.board.length
+    constructor(boardObj, gridOwner) {
+        this.width = boardObj.board[0].length
+        this.height = boardObj.board.length
         this.gridOwner = gridOwner
-        this.name = gridObj.name
+        this.name = boardObj.name
         this.$board = $('.container')
+        this.boardObj = boardObj
     }
     generateGrid() {
         for (let i = 0; i < this.width; i++) {
@@ -17,6 +18,27 @@ class DisplayGrid {
                 // this.board[i].push(cell)
                 const $gridVisual = $('<div>').addClass("grid")//.attr("id",String.fromCharCode(65 + i)  + j)
                 $columnVisual.append($gridVisual)
+            }
+        }
+    }
+    updateGrid() {
+        const $board = $('.grid')
+        console.log($board)
+        for (let i = 0; i < this.width; i++) {
+            //this.board.push([])
+            // const $columnVisual = $('<div>')//.attr("id", String.fromCharCode(65 + i))
+            // this.$board.append($columnVisual)
+
+            for (let j = 0; j < this.height; j++) {
+                // const cell = new Cell()
+                // this.board[i].push(cell)
+                // const $gridVisual = $('<div>').addClass("grid")//.attr("id",String.fromCharCode(65 + i)  + j)
+                // $columnVisual.append($gridVisual)
+                console.log($board.eq(i * this.width + j))
+                //console.log(this.boardObj.board[i][j].occupiedName)
+                if (this.boardObj.board[i][j].occupiedName != "") {
+                    $board.eq(i * this.width + j).addClass("damaged")
+                }
             }
         }
     }
@@ -43,8 +65,8 @@ class DisplayShip {
         $ship.css('height', (midY + 1) * 32 + "px")
             .css('width', midX * 32 + "px")
             .draggable({
-            opacity: 0.7, snap: ".grid", snapMode: "outer",
-            cursorAt: { top: (midY + 1) * 16, left: midX * 16 }
+                opacity: 0.7, snap: ".grid", snapMode: "outer",
+                cursorAt: { top: (midY + 1) * 16, left: midX * 16 }
             })
         $('.ships').append($ship)
 

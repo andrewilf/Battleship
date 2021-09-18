@@ -35,6 +35,7 @@ player1.shipDestroyed("A.W.S. test")
 
 graphicBoard = new DisplayGrid(board, "player1")
 graphicBoard.generateGrid()
+board.placeShip(cruiser, "E5")
 $(() => {
     graphicBoard = new DisplayGrid(board, "player1")
     graphicBoard.generateGrid()
@@ -67,4 +68,5 @@ $(() => {
     $('.ship').on('mouseup', function () {
         console.log("up")
     })
+    graphicBoard.updateGrid()
 })
