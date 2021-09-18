@@ -35,7 +35,8 @@ player1.shipDestroyed("A.W.S. test")
 
 graphicBoard = new DisplayGrid(board, "player1")
 graphicBoard.generateGrid()
-board.placeShip(cruiser, "E5")
+board.placeShip(cruiser, "E3")
+board.placeShip(cruiser, "E6")
 $(() => {
     graphicBoard = new DisplayGrid(board, "player1")
     graphicBoard.generateGrid()

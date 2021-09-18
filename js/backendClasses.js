@@ -134,53 +134,70 @@ class Board {
     placeShip(shipObj, middleCoor) {
         const row = middleCoor[0].charCodeAt(0) - 65
         const column = middleCoor.substr(1) - 1
+        const placedCoordinates = []
         console.log("row: ", row, "column: ", column)
         // console.log("row: ", row.charCodeAt(0) - 65, "column: ", column-1)
         if (!this.board[row][column].occupiedName) {
             this.board[row][column].occupiedName = shipObj.name
+            placedCoordinates.push([row, column])
             console.log(this.board[row][column].occupiedName)
 
             for (let front = 1; front <= shipObj.front; front++) {
-                if(!this.board[row][column - front].occupiedName) {
+                if (!this.board[row][column - front].occupiedName) {
                     this.board[row][column - front].occupiedName = shipObj.name
+                    placedCoordinates.push([row, column - front])
                 }
                 else {
                     console.log("occupied")
+                    break
                 }
                 console.log(this.board[row][column - front].occupiedName)
             }
             for (let back = 1; back <= shipObj.back; back++) {
-                if(!this.board[row][column + back].occupiedName) {
+                if (!this.board[row][column + back].occupiedName) {
                     this.board[row][column + back].occupiedName = shipObj.name
+                    placedCoordinates.push([row, column + back])
                 }
                 else {
                     console.log("occupied")
+                    break
                 }
                 console.log(this.board[row][column + back].occupiedName)
             }
             for (let left = 1; left <= shipObj.left; left++) {
-                if(!this.board[row - left][column].occupiedName) {
+                if (!this.board[row - left][column].occupiedName) {
                     this.board[row - left][column].occupiedName = shipObj.name
+                    placedCoordinates.push([row - left, column])
                 }
                 else {
                     console.log("occupied")
+                    break
                 }
                 console.log(this.board[row - left][column].occupiedName)
             }
             for (let right = 1; right <= shipObj.right; right++) {
-                if(!this.board[row + right][column].occupiedName) {
+                if (!this.board[row + right][column].occupiedName) {
                     this.board[row + right][column].occupiedName = shipObj.name
+                    placedCoordinates.push([row + right, column])
                 }
                 else {
                     console.log("occupied")
+                    break
                 }
                 console.log(this.board[row + right][column].occupiedName)
             }
-
+            if (placedCoordinates.length != (shipObj.front + shipObj.back + shipObj.right + shipObj.left + 1)) {
+                console.log(placedCoordinates)
+                console.log("ship cannot be placed")
+                for (const coordinates of placedCoordinates) {
+                    this.board[coordinates[0]][coordinates[1]].occupiedName = ""
+                }
+                return false
+            }
             return true
         }
         else {
-            console.log("occupied")
+            console.log("origin is occupied")
             return false
         }
     }

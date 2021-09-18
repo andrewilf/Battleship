@@ -26,7 +26,7 @@ class DisplayGrid {
         console.log($board)
         for (let i = 0; i < this.width; i++) {
             for (let j = 0; j < this.height; j++) {
-                console.log($board.eq(i * this.width + j))
+                //console.log($board.eq(i * this.width + j))
                 if (this.boardObj.board[i][j].occupiedName != "") {
                     $board.eq(i * this.height + j).addClass("damaged")
                 }
