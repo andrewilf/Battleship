@@ -6,8 +6,8 @@
 }
 .grid {
     background-color: aqua;
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
     flex-flow: row wrap;
     border: 1px solid black;
     cursor: pointer;
@@ -33,4 +33,6 @@
 .dead {
     background-color: red;
 }
+
+
 

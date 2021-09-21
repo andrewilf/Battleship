@@ -9,6 +9,7 @@ const Display = {
 }
 
 $(() => {
+    $('[data-toggle="tooltip"]').tooltip()
     const cruiser = new Ship("submarine", "test1", 5)
     console.log(cruiser)
     const player1 = new Player("A.W.S.")
@@ -28,10 +29,23 @@ $(() => {
         console.log($(this).eq(0).attr("coordinate"))
         board1.refreshPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
     }
+    function viewName() {
+        const [column, row] = splitCoordinates($(this).eq(0).attr("coordinate"))
+        //console.log($(this).eq(0).attr("coordinate"))
+        console.log(board1.board[row][column].occupiedName)
+        $('#currentShip').text(board1.board[row][column].occupiedName)
+    }
     function placeShipDown() {
         console.log($(this).eq(0).attr("coordinate"))
         const successfulPlace = board1.placeShip(currentShip, $(this).eq(0).attr("coordinate"))
-        if (successfulPlace) {
+        if (currentShipIndex > player1.fleet.length - 2) {
+            $('.grid').off("click", placeShipDown)
+            $('.grid').off("wheel", hoverOver)
+            $('.grid').off("wheel", hoverOff)
+            $('.grid').off()
+            $('.grid').hover(viewName)
+        }
+        else if (successfulPlace) {
             currentShipIndex++
             currentShip = player1.fleet[currentShipIndex]
         }
