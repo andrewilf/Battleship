@@ -1,4 +1,4 @@
-.container {
+#main, .container {
     height: 80%;
     width: 80%;
     display:flex;
@@ -12,8 +12,19 @@
     border: 1px solid black;
     cursor: pointer;
 }
-.alive {
+.placeable {
     background-color: green;
+}
+.unplaceable {
+    background-color: grey;
+}
+.missed {
+    background-color: blue;
+}
+.ship {
+    background-color: darkmagenta;
+    /* height: 24px;
+    width: 26px; */
 }
 .damaged {
     background-color: orange;
@@ -22,15 +33,4 @@
 .dead {
     background-color: red;
 }
-.unplaceable {
-    background-color: grey;
-}
-.ships {
-    /* display: flex; */
-}
-.ship {
-    background-color: darkmagenta;
-    height: 24px;
-    width: 26px;
-    
-}
+
