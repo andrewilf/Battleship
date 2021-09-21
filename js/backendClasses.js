@@ -362,6 +362,7 @@ class Board {
             for (const cell of coordinatesToCheck) {
                 console.log(cell)
                 this.updateCell(cell, "ship")
+                this.board[cell[1]][cell[0]].occupiedName = shipObj.name
             }
         }
         // else {
