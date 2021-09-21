@@ -311,9 +311,9 @@ class Board {
             }
         }
     }
-    placeShip(shipObj, middleCoor) {
-        console.log(middleCoor)
-        const [column, row] = splitCoordinates(middleCoor)
+    placeShip(shipObj, middleCoordinates) {
+        console.log(middleCoordinates)
+        const [column, row] = splitCoordinates(middleCoordinates)
         const coordinatesToCheck = []
         let blockedFlag = false
         if (this.board[row][column].occupiedName === '') {
@@ -323,22 +323,17 @@ class Board {
             blockedFlag = true
         } try {
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
-                console.log(this.board[row][column - front].occupiedName)
-
+                //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
-                    //if () {
                     coordinatesToCheck.push([column - front, row])
-                    // }
                 }
                 else {
                     blockedFlag = true
 
                 }
             }
-
-
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
-                if (column + back < this.width && this.board[row][column + back].occupiedName === '') {
+                if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
                     coordinatesToCheck.push([column + back, row])
                 }
                 else {
@@ -366,15 +361,15 @@ class Board {
         if (!blockedFlag) {
             for (const cell of coordinatesToCheck) {
                 console.log(cell)
-                this.updateCell(cell, "placeable")
+                this.updateCell(cell, "ship")
             }
         }
-        else {
-            for (const cell of coordinatesToCheck) {
-                console.log(cell)
-                this.updateCell(cell, "unplaceable")
-            }
-        }
+        // else {
+        //     for (const cell of coordinatesToCheck) {
+        //         console.log(cell)
+        //         this.hoverOffCell(cell, "unplaceable")
+        //     }
+        // }
 
     }
     placeShipManually(shipObj, middleCoor) {
@@ -450,6 +445,7 @@ class Board {
             return false
         }
     }
+    //placement
 }
 
 // generic Ship object. may have children classes if more specific battleships are required

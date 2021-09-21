@@ -63,6 +63,6 @@ $(() => {
     //     }
     //     console.log($(this))
     // })
-//    $('.grid').on("click", placeShip)
+    $('.grid').on("click", placeShipDown)
 
     })
