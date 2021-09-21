@@ -35,13 +35,18 @@ player1.shipDestroyed("A.W.S. test")
 
 graphicBoard = new DisplayGrid(board, "player1")
 graphicBoard.generateGrid()
-board.placeShip(cruiser, "E3")
-board.placeShip(cruiser, "E6")
+//board.placeShip(cruiser, "E3")
+//board.placeShip(cruiser, "E6")
 $(() => {
     graphicBoard = new DisplayGrid(board, "player1")
     graphicBoard.generateGrid()
-    $allGrid = $('.grid').hover(hoverOver, hoverOut)
+    $allGrid = $('.grid').hover(shipHoverOver, hoverOut)
 
+    $clickPlace = $('.grid').click(() => {
+        console.log(currentTile)
+        board.placeShip(cruiser, currentTile)
+        graphicBoard.updateGrid()
+    })
     visualShip = new DisplayShip(cruiser)
     visualShip.generateShip()
     cruiser.rotateClockwise()
@@ -54,20 +59,21 @@ $(() => {
     const fleetTest = [visualShip2, visualShip]
     // console.log(String.fromCharCode(69))
     $('.ship').on('dblclick', function () {
-        // this.shipObj.rotateClockwise()
-        // this.regenerateShip()
-        //console.log($(this))
-        //console.log($(this).attr('id'))
         index = fleetTest.findIndex((element) => element.shipObj.name === $(this).attr('id'))
 
         fleetTest[index].shipObj.rotateClockwise()
         fleetTest[index].regenerateShip()
     })
-    $('.ship').on('mousedown', function () {
-        console.log("down")
-    })
-    $('.ship').on('mouseup', function () {
-        console.log("up")
-    })
+    // $('.ship').on('mousedown', function () {
+    //     console.log("down")
+    // })
+    // $('.ship').on('mouseup', function () {
+    //     console.log("up")
+    // })
+    
+    $(window).on("mousewheel",function(){
+        cruiser.rotateClockwise()
+      });
+
     graphicBoard.updateGrid()
 })

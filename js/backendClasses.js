@@ -151,7 +151,7 @@ class Board {
                     console.log("occupied")
                     break
                 }
-                console.log(this.board[row][column - front].occupiedName)
+                //console.log(this.board[row][column - front].occupiedName)
             }
             for (let back = 1; back <= shipObj.back; back++) {
                 if (!this.board[row][column + back].occupiedName) {
@@ -162,7 +162,7 @@ class Board {
                     console.log("occupied")
                     break
                 }
-                console.log(this.board[row][column + back].occupiedName)
+                //console.log(this.board[row][column + back].occupiedName)
             }
             for (let left = 1; left <= shipObj.left; left++) {
                 if (!this.board[row - left][column].occupiedName) {
@@ -173,7 +173,7 @@ class Board {
                     console.log("occupied")
                     break
                 }
-                console.log(this.board[row - left][column].occupiedName)
+                //console.log(this.board[row - left][column].occupiedName)
             }
             for (let right = 1; right <= shipObj.right; right++) {
                 if (!this.board[row + right][column].occupiedName) {
@@ -217,7 +217,7 @@ class Ship {
         this.attack = attack
         this.health = length
         this.canons = canons
-
+        this.coordinates = []
         this.dead = false
 
     }

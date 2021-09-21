@@ -16,7 +16,7 @@ class DisplayGrid {
             for (let j = 1; j <= this.height; j++) {
                 // const cell = new Cell()
                 // this.board[i].push(cell)
-                const $gridVisual = $('<div>').addClass("grid").attr("id",String.fromCharCode(65 + i)  + j)
+                const $gridVisual = $('<div>').addClass("grid").attr("coordinate",String.fromCharCode(65 + i)  + j)
                 $columnVisual.append($gridVisual)
             }
         }
@@ -59,8 +59,8 @@ class DisplayShip {
                 opacity: 0.7, snap: ".grid", snapMode: "outer",
                 cursorAt: { top: (midY + 1) * 16, left: midX * 16 }
             })
-        $('.ships').append($ship)
-
+        //$('.ships').append($ship)
+        $('.ships').append($('<div>').addClass(this.shipObj.name).append($ship))
     }
     regenerateShip() {
         const $ship = $("#" + this.shipObj.name)
@@ -90,5 +90,17 @@ function hoverOver() {
 }
 
 function hoverOut() {
+    $(this).removeClass("unplaceable")
+}
+
+function shipHoverOver() {
+    currentTile = $(this).attr('coordinate')
+    //console.log($(this).attr('coordinate'))
+    //const currentCoordinates = $(this).attr('coordinate')
+    
+
+}
+let currentTile = ""
+function shipHoverOut() {
     $(this).removeClass("unplaceable")
 }
