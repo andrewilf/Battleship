@@ -10,59 +10,40 @@ const Display = {
 
 $(() => {
     const cruiser = new Ship("submarine", "test1", 5)
-    //cruiser.rotateClockwise()
     console.log(cruiser)
-    const board1 = new Board(8, 10, "player1")
+    const player1 = new Player("A.W.S.")
+    player1.createFleet()
+    const board1 = new Board(8, 10, player1.prefix)
     board1.generateVisual()
     cruiser.rotateClockwise()
-    board1.placeShipManually(cruiser,"E7")
-    //board1.board[9][7].occupiedName = "filled"               always height, width
+    board1.placeShipManually(cruiser, "E7")
+    let currentShip = player1.fleet[0]
+    let currentShipIndex = 0
 
-    $('.grid').hover(test, test1)
-    function test() {
+    function hoverOver() {
         console.log($(this).eq(0).attr("coordinate"))
-        board1.checkPlaceShip(cruiser, $(this).eq(0).attr("coordinate"))
+        board1.checkPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
     }
-    function test1() {
+    function hoverOff() {
         console.log($(this).eq(0).attr("coordinate"))
-        board1.refreshPlaceShip(cruiser, $(this).eq(0).attr("coordinate"))
+        board1.refreshPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
     }
     function placeShipDown() {
         console.log($(this).eq(0).attr("coordinate"))
-        board1.placeShip(cruiser, $(this).eq(0).attr("coordinate"))
+        const successfulPlace = board1.placeShip(currentShip, $(this).eq(0).attr("coordinate"))
+        if (successfulPlace) {
+            currentShipIndex++
+            currentShip = player1.fleet[currentShipIndex]
+        }
     }
-    $('.grid').on("wheel", (
-        test1
-    ))
+    $('.grid').hover(hoverOver, hoverOff)
+    $('.grid').on("wheel", hoverOff)
     $('.grid').on("wheel", (() => {
-        cruiser.rotateClockwise()
+        currentShip.rotateClockwise()
         console.log($(this).children())
+        console.log(player1.fleet[currentShipIndex])
     }))
-    $('.grid').on("wheel", (
-        test
-    ))
-    // $(document).on('keypress',function(e) {     //rotate with r, wheel can cause graphic issues
-    //     if(e.which == 114) {
-    //         test1
-    //     }
-    // })
-    // $(document).on('keypress',function(e) {     
-    //     if(e.which == 114) {
-    //         cruiser.rotateClockwise()
-    //     }
-    // })
-    // $(document).on('keypress',function(e) {  
-    //     if(e.which == 114) {
-    //         test
-    //     }
-    //     console.log()
-    // })
-    // $(document).on('keypress',function(e) {  
-    //     if(e.which == 114) {
-    //         test
-    //     }
-    //     console.log($(this))
-    // })
+    $('.grid').on("wheel", hoverOver)
     $('.grid').on("click", placeShipDown)
 
-    })
+})

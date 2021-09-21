@@ -364,14 +364,9 @@ class Board {
                 this.updateCell(cell, "ship")
                 this.board[cell[1]][cell[0]].occupiedName = shipObj.name
             }
+            return true
         }
-        // else {
-        //     for (const cell of coordinatesToCheck) {
-        //         console.log(cell)
-        //         this.hoverOffCell(cell, "unplaceable")
-        //     }
-        // }
-
+        return false
     }
     placeShipManually(shipObj, middleCoor) {
         const [column, row] = splitCoordinates(middleCoor)
@@ -477,7 +472,7 @@ class Ship {
     }
     //method rotates the ship clockwise
     rotateClockwise() {
-        if (this.right === 0) {
+        if (this.right === 0 && this.left === 0) {
             this.left = this.back
             this.right = this.front
             this.front = 0
@@ -494,7 +489,7 @@ class Ship {
     }
     //method rotates the ship anti-clockwise
     rotateAntiClockwise() {
-        if (this.right === 0) {
+        if (this.right === 0 && this.left === 0) {
             this.left = this.front
             this.right = this.back
             this.front = 0
