@@ -442,6 +442,18 @@ class Board {
         }
     }
     //placement
+    attack(selectedCoordinates) {
+        const [column, row] = splitCoordinates(selectedCoordinates)
+        const $target = $('.grid').eq(column * this.height + row)
+        if (this.board[row][column].occupiedName !== "") {
+            $target.addClass("damaged")
+        }
+        else {
+            $target.addClass("missed")
+        }
+        // console.log(this.board)
+        console.log($target)
+    }
 }
 
 // generic Ship object. may have children classes if more specific battleships are required
@@ -558,4 +570,5 @@ class Player {
             console.error("cannot remove a ship which does not exist")
         }
     }
+
 }

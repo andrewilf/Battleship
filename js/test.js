@@ -35,6 +35,10 @@ $(() => {
         console.log(board1.board[row][column].occupiedName)
         $('#currentShip').text(board1.board[row][column].occupiedName)
     }
+    function AttackCell() {
+        console.log($(this).eq(0).attr("coordinate"))
+        board1.attack($(this).eq(0).attr("coordinate"))
+    }
     function placeShipDown() {
         console.log($(this).eq(0).attr("coordinate"))
         const successfulPlace = board1.placeShip(currentShip, $(this).eq(0).attr("coordinate"))
@@ -44,6 +48,7 @@ $(() => {
             $('.grid').off("wheel", hoverOff)
             $('.grid').off()
             $('.grid').hover(viewName)
+            $('.grid').on("click", AttackCell)
         }
         else if (successfulPlace) {
             currentShipIndex++
@@ -59,5 +64,8 @@ $(() => {
     }))
     $('.grid').on("wheel", hoverOver)
     $('.grid').on("click", placeShipDown)
+
+
+    board1.attack("D5")
 
 })
