@@ -31,17 +31,38 @@ $(() => {
         console.log($(this).eq(0).attr("coordinate"))
         board1.placeShip(cruiser, $(this).eq(0).attr("coordinate"))
     }
-    $('.grid').on("dblclick", (
+    $('.grid').on("wheel", (
         test1
     ))
-    $('.grid').on("dblclick", (() => {
+    $('.grid').on("wheel", (() => {
         cruiser.rotateClockwise()
         console.log($(this).children())
     }))
-    $('.grid').on("dblclick", (
+    $('.grid').on("wheel", (
         test
     ))
-
+    // $(document).on('keypress',function(e) {     //rotate with r, wheel can cause graphic issues
+    //     if(e.which == 114) {
+    //         test1
+    //     }
+    // })
+    // $(document).on('keypress',function(e) {     
+    //     if(e.which == 114) {
+    //         cruiser.rotateClockwise()
+    //     }
+    // })
+    // $(document).on('keypress',function(e) {  
+    //     if(e.which == 114) {
+    //         test
+    //     }
+    //     console.log()
+    // })
+    // $(document).on('keypress',function(e) {  
+    //     if(e.which == 114) {
+    //         test
+    //     }
+    //     console.log($(this))
+    // })
 //    $('.grid').on("click", placeShip)
 
     })

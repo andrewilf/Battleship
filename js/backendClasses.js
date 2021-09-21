@@ -172,7 +172,7 @@ class Board {
         //const cellToCheck = this.board[column][row]
         const $cell = this.$board.children().eq(column).children().eq(row)
         //$cell.removeClass()
-        $cell.addClass("grid")
+        //$cell.addClass("grid")
         $cell.addClass(newStatus)
     }
     hoverOffCell(cellToCheckCoordinates, newStatus) {
@@ -181,6 +181,8 @@ class Board {
         //const cellToCheck = this.board[column][row]
         const $cell = this.$board.children().eq(column).children().eq(row)
         $cell.removeClass(newStatus)
+        // $cell.removeClass("unplaceable")
+        // $cell.removeClass("placeable")
         // $cell.addClass("grid")
         // $cell.addClass(newStatus)
     }
@@ -196,23 +198,20 @@ class Board {
             blockedFlag = true
         } try {
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
-                console.log(this.board[row][column - front].occupiedName)
-
+                //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
-                    //if () {
                     coordinatesToCheck.push([column - front, row])
-                    // }
+                    console.log("front")
                 }
                 else {
                     blockedFlag = true
 
                 }
             }
-
-
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
-                if (column + back < this.width && this.board[row][column + back].occupiedName === '') {
+                if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
                     coordinatesToCheck.push([column + back, row])
+                    console.log("back")
                 }
                 else {
                     blockedFlag = true
@@ -221,13 +220,15 @@ class Board {
             for (let left = 1; left <= shipObj.left && shipObj.left !== 0; left++) {
                 if (row - left >= 0 && this.board[row - left][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row - left])
+                    console.log("left")
                 } else {
                     blockedFlag = true
                 }
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
-                if (row + right < this.height && this.board[row + right][column].occupiedName === '') {
+                if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row + right])
+                    console.log("right")
                 } else {
                     blockedFlag = true
                 }
@@ -260,25 +261,19 @@ class Board {
         }
         else {
             blockedFlag = true
-        }
-        try {
+        } try {
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
-                console.log(this.board[row][column - front].occupiedName)
-
+                //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
-                    //if () {
                     coordinatesToCheck.push([column - front, row])
-                    // }
                 }
                 else {
                     blockedFlag = true
 
                 }
             }
-
-
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
-                if (column + back < this.width && this.board[row][column + back].occupiedName === '') {
+                if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
                     coordinatesToCheck.push([column + back, row])
                 }
                 else {
@@ -293,7 +288,7 @@ class Board {
                 }
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
-                if (row + right < this.height && this.board[row + right][column].occupiedName === '') {
+                if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row + right])
                 } else {
                     blockedFlag = true
@@ -358,7 +353,7 @@ class Board {
                 }
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
-                if (row + right < this.height && this.board[row + right][column].occupiedName === '') {
+                if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row + right])
                 } else {
                     blockedFlag = true
