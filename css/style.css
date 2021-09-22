@@ -6,8 +6,8 @@
 }
 .grid {
     background-color: aqua;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     flex-flow: row wrap;
     border: 1px solid black;
     cursor: pointer;
@@ -32,6 +32,11 @@
 }
 .dead {
     background-color: red;
+}
+.selected {
+    border: 2px solid black;
+    height: 38px;
+    width: 38px;
 }
 
 

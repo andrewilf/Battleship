@@ -11,7 +11,7 @@ const shipNames = {
         'Shiromine Maru',
         'BRAVADO',
         'Aruba',
-        'Jib&Tonic',
+        'Jib & Tonic',
         'Amiral Sallandrouze de Lamornaix',
         'Agios Georgios',
         'Brighton',
@@ -311,6 +311,15 @@ class Board {
             }
         }
     }
+    clearAllhoverCells() {
+        for (let column = 0; column < this.height; column++) {
+            for (let row = 0; row < this.width; row++) {
+                const $cell = this.$board.children().eq(row).children().eq(column)
+                $cell.removeClass("unplaceable")
+                $cell.removeClass("placeable")
+            }
+        }
+    }
     placeShip(shipObj, middleCoordinates) {
         console.log(middleCoordinates)
         const [column, row] = splitCoordinates(middleCoordinates)
@@ -445,14 +454,23 @@ class Board {
     attack(selectedCoordinates) {
         const [column, row] = splitCoordinates(selectedCoordinates)
         const $target = $('.grid').eq(column * this.height + row)
+        
+        console.log($target.attr("class"))
+        if ($target.attr("class").search("missed") !== -1) {
+            console.log("already missed")
+            return false
+        }
         if (this.board[row][column].occupiedName !== "") {
             $target.addClass("damaged")
+            return true
         }
         else {
             $target.addClass("missed")
+            return true
         }
         // console.log(this.board)
-        console.log($target)
+        //console.log($target.attr("class"))
+        
     }
 }
 
