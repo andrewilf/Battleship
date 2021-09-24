@@ -312,8 +312,8 @@ class Board {
         }
     }
     clearAllhoverCells() {
-        for (let column = 0; column < this.height; column++) {
-            for (let row = 0; row < this.width; row++) {
+        for (let column = 0; column < this.width; column++) {
+            for (let row = 0; row < this.height; row++) {
                 const $cell = this.$board.children().eq(row).children().eq(column)
                 $cell.removeClass("unplaceable")
                 $cell.removeClass("placeable")
@@ -373,6 +373,8 @@ class Board {
                 this.updateCell(cell, "ship")
                 this.board[cell[1]][cell[0]].occupiedName = shipObj.name
             }
+            shipObj.coordinates = coordinatesToCheck
+            console.log(shipObj)
             return true
         }
         return false
@@ -443,6 +445,8 @@ class Board {
                 console.log(cell)
                 this.updateCell([cell[1], cell[0]], "ship")
             }
+            shipObj.coordinates = placedCoordinates
+            console.log(shipObj)
             return true
         }
         else {
@@ -451,17 +455,31 @@ class Board {
         }
     }
     //placement
-    attack(selectedCoordinates) {
+    attack(selectedCoordinates, targetPlayer) {
         const [column, row] = splitCoordinates(selectedCoordinates)
         const $target = $('.grid').eq(column * this.height + row)
         
         console.log($target.attr("class"))
-        if ($target.attr("class").search("missed") !== -1) {
-            console.log("already missed")
+        if ($target.attr("class").search("missed") !== -1 || $target.attr("class").search("damaged") !== -1) {
+            console.log("already targeted")
             return false
         }
         if (this.board[row][column].occupiedName !== "") {
             $target.addClass("damaged")
+            const shipName = this.board[row][column].occupiedName
+            console.log(targetPlayer)
+            targetPlayer.fleet.find(element => element.name === shipName)
+            console.log(shipName)
+            console.log(targetPlayer.fleet.find(element => element.name == shipName))
+            const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
+            const shipAlive = shipObj.getDamaged()
+            console.log(shipAlive)
+            if (!shipAlive) {
+                for (const cell of shipObj.coordinates) {
+                    console.log(cell)
+                    this.updateCell([cell[0], cell[1]], "dead")
+                }
+            }
             return true
         }
         else {
@@ -531,6 +549,10 @@ class Ship {
             this.right = 0
             this.left = 0
         }
+    }
+    getDamaged() {
+        this.health--
+        return this.checkAlive()
     }
 }
 
