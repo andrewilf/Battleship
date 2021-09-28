@@ -187,7 +187,7 @@ class Board {
         // $cell.addClass(newStatus)
     }
     checkPlaceShip(shipObj, currentHover) {
-        console.log(currentHover)
+        //console.log(currentHover)
         const [column, row] = splitCoordinates(currentHover)
         const coordinatesToCheck = []
         let blockedFlag = false
@@ -201,7 +201,7 @@ class Board {
                 //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
                     coordinatesToCheck.push([column - front, row])
-                    console.log("front")
+                    //console.log("front")
                 }
                 else {
                     blockedFlag = true
@@ -211,7 +211,7 @@ class Board {
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
                 if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
                     coordinatesToCheck.push([column + back, row])
-                    console.log("back")
+                    //console.log("back")
                 }
                 else {
                     blockedFlag = true
@@ -220,7 +220,7 @@ class Board {
             for (let left = 1; left <= shipObj.left && shipObj.left !== 0; left++) {
                 if (row - left >= 0 && this.board[row - left][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row - left])
-                    console.log("left")
+                    //console.log("left")
                 } else {
                     blockedFlag = true
                 }
@@ -228,7 +228,7 @@ class Board {
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
                 if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
                     coordinatesToCheck.push([column, row + right])
-                    console.log("right")
+                    //console.log("right")
                 } else {
                     blockedFlag = true
                 }
@@ -239,20 +239,20 @@ class Board {
         }
         if (!blockedFlag) {
             for (const cell of coordinatesToCheck) {
-                console.log(cell)
+                //console.log(cell)
                 this.updateCell(cell, "placeable")
             }
         }
         else {
             for (const cell of coordinatesToCheck) {
-                console.log(cell)
+                //console.log(cell)
                 this.updateCell(cell, "unplaceable")
             }
         }
 
     }
     refreshPlaceShip(shipObj, currentHover) {
-        console.log(currentHover)
+        //console.log(currentHover)
         const [column, row] = splitCoordinates(currentHover)
         const coordinatesToCheck = []
         let blockedFlag = false
@@ -300,13 +300,13 @@ class Board {
         }
         if (!blockedFlag) {
             for (const cell of coordinatesToCheck) {
-                console.log(cell)
+                //console.log(cell)
                 this.hoverOffCell(cell, "placeable")
             }
         }
         else {
             for (const cell of coordinatesToCheck) {
-                console.log(cell)
+                //console.log(cell)
                 this.hoverOffCell(cell, "unplaceable")
             }
         }
@@ -467,6 +467,8 @@ class Board {
     }
     //placement
     attackEnemy(selectedCoordinates, targetPlayer) {
+        console.log("enemy attacks")
+        console.log(selectedCoordinates)
         const [column, row] = splitCoordinates(selectedCoordinates)
         //console.log('#'+this.owner)
         const id = '#' + this.owner
@@ -488,12 +490,15 @@ class Board {
             const shipAlive = shipObj.getDamaged()
             console.log(shipAlive)
             if (!shipAlive) {
+                targetPlayer.shipDestroyed(shipObj.name)
+                console.log("your battleship sunk")
+                alert("your battleship sunk")
                 for (const cell of shipObj.coordinates) {
                     console.log(cell)
                     this.updateCell([cell[0], cell[1]], "dead")
                 }
             }
-            return true
+            return [true, "hit"]
         }
         else {
             $target.addClass("missed")
@@ -504,6 +509,7 @@ class Board {
 
     }
     attack(selectedCoordinates, targetPlayer) {
+        console.log("player attacks")
         const [column, row] = splitCoordinates(selectedCoordinates)
         //console.log('#'+this.owner)
         const id = '#' + this.owner
@@ -528,12 +534,13 @@ class Board {
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("you sunk my battleship")
+                alert("you sunk my battleship")
                 // for (const cell of shipObj.coordinates) {
                 //     console.log(cell)
                 //     this.updateCell([cell[0], cell[1]], "dead")
                 // }
             }
-            return true
+            return [true, "hit"]
         }
         else {
             $target.addClass("missed")
@@ -663,7 +670,7 @@ class Player {
     }
     checkRemainingFleet() {
         console.log(this.fleet)
-        if (this.fleet.length === 0) {
+        if (this.fleet.length <= 0) {
             console.log("fleet destroyed")
             return false
         }
