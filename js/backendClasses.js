@@ -107,7 +107,7 @@ const shipStats = {
 let currentHover = ""
 
 const splitCoordinates = (coordinate) => {  //gets fed coordinates and translate then into numbers of the grid array, always offset by 1
-    console.log(coordinate)
+    //console.log(coordinate)
     try {
         const column = coordinate[0].charCodeAt(0) - 65
         const row = parseInt(coordinate.substr(1)) - 1
@@ -330,16 +330,17 @@ class Board {
         }
     }
     placeShip(shipObj, middleCoordinates) {
-        console.log(middleCoordinates)
+        //console.log(middleCoordinates)
         const [column, row] = splitCoordinates(middleCoordinates)
         const coordinatesToCheck = []
         let blockedFlag = false
+        try {
         if (this.board[row][column].occupiedName === '') {
             coordinatesToCheck.push([column, row])
         }
         else {
             blockedFlag = true
-        } try {
+        } 
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
                 //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
@@ -375,6 +376,7 @@ class Board {
         }
         catch (e) {
             blockedFlag = true
+            
         }
         if (!blockedFlag) {
             for (const cell of coordinatesToCheck) {
