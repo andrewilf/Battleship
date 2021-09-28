@@ -161,7 +161,7 @@ class Board {
             this.$board.append($columnVisual) //each width div encapsulates a full column
             for (let j = 1; j <= this.height; j++) {
 
-                const $gridVisual = $('<div>').addClass("grid").attr("coordinate", String.fromCharCode(65 + i) + j)
+                const $gridVisual = $('<div>').addClass("grid").attr("coordinate", String.fromCharCode(65 + i) + j).addClass(this.owner)
                 $columnVisual.append($gridVisual)               //attribute "coordinates" tells us where on the grid it is e.g. E4 is 5th column and 4th row
             }
         }
@@ -320,6 +320,15 @@ class Board {
             }
         }
     }
+    hideShipCells() {
+        for (let column = 0; column < this.width; column++) {
+            for (let row = 0; row < this.height; row++) {
+                const $cell = this.$board.children().eq(row).children().eq(column)
+                //$cell.removeClass("unplaceable")
+                $cell.removeClass("ship")
+            }
+        }
+    }
     placeShip(shipObj, middleCoordinates) {
         console.log(middleCoordinates)
         const [column, row] = splitCoordinates(middleCoordinates)
@@ -455,10 +464,12 @@ class Board {
         }
     }
     //placement
-    attack(selectedCoordinates, targetPlayer) {
+    attackEnemy(selectedCoordinates, targetPlayer) {
         const [column, row] = splitCoordinates(selectedCoordinates)
-        const $target = $('.grid').eq(column * this.height + row)
-        
+        //console.log('#'+this.owner)
+        const id = '#' + this.owner
+        const $target = $(id).children().eq(column).children().eq(row)
+        console.log($target)
         console.log($target.attr("class"))
         if ($target.attr("class").search("missed") !== -1 || $target.attr("class").search("damaged") !== -1) {
             console.log("already targeted")
@@ -488,7 +499,45 @@ class Board {
         }
         // console.log(this.board)
         //console.log($target.attr("class"))
-        
+
+    }
+    attack(selectedCoordinates, targetPlayer) {
+        const [column, row] = splitCoordinates(selectedCoordinates)
+        //console.log('#'+this.owner)
+        const id = '#' + this.owner
+        const $target = $(id).children().eq(column).children().eq(row)
+        console.log($target)
+        console.log($target.attr("class"))
+        if ($target.attr("class").search("missed") !== -1 || $target.attr("class").search("damaged") !== -1) {
+            console.log("already targeted")
+            return false
+        }
+        if (this.board[row][column].occupiedName !== "") {
+            $target.addClass("damaged")
+            const shipName = this.board[row][column].occupiedName
+            console.log(targetPlayer)
+            targetPlayer.fleet.find(element => element.name === shipName)
+            console.log(shipName)
+            console.log(targetPlayer.fleet.find(element => element.name == shipName))
+            const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
+            const shipAlive = shipObj.getDamaged()
+            console.log(shipAlive)
+            
+            if (!shipAlive) {
+                targetPlayer.shipDestroyed(shipObj.name)
+                console.log("you sunk my battleship")
+                // for (const cell of shipObj.coordinates) {
+                //     console.log(cell)
+                //     this.updateCell([cell[0], cell[1]], "dead")
+                // }
+            }
+            return true
+        }
+        else {
+            $target.addClass("missed")
+            
+            return true
+        }
     }
 }
 
@@ -604,11 +653,18 @@ class Player {
         const index = this.fleet.findIndex((ship) => ship.name === destroyedShipName)
         if (index !== -1) {
             console.log("removing", this.fleet[index])
-            this.fleet.splice(index, 1, '')
+            this.fleet.splice(index, 1, )
         }
         else {
             console.error("cannot remove a ship which does not exist")
         }
     }
-
+    checkRemainingFleet() {
+        console.log(this.fleet)
+        if (this.fleet.length === 0) {
+            console.log("fleet destroyed")
+            return false
+        }
+        return true
+    }
 }

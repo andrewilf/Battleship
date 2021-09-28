@@ -1,5 +1,5 @@
 //to test code functions
-
+/*
 const App = {
 
 }
@@ -12,15 +12,14 @@ $(() => {
     $('[data-toggle="tooltip"]').tooltip()
     const cruiser = new Ship("submarine", "test1", 5)
     const cruiser2 = new Ship("submarine", "test2", 5)
-    //console.log(cruiser)
-    const player1 = new Player("A.W.S.")
+  
+    const player1 = new Player("AWS")
     player1.createFleet()
     const board1 = new Board(10, 12, player1.prefix)
     board1.generateVisual()
     cruiser.rotateClockwise()
     cruiser2.rotateClockwise()
-    //board1.placeShipManually(cruiser, "E7")
-    //board1.placeShipManually(cruiser2, "C7")
+
     console.log(player1)
     let currentShip = player1.fleet[0]
     let currentShipIndex = 0
@@ -49,7 +48,7 @@ $(() => {
             board1.checkPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
             wheelCounter = 0
             wheelWait = false
-            setTimeout(()=>{wheelWait = true}, 800)
+            setTimeout(() => { wheelWait = true }, 800)
         }
         else if (wheelCounter < -2 && wheelWait === true) {
             board1.refreshPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
@@ -57,18 +56,25 @@ $(() => {
             board1.checkPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
             wheelCounter = 0
             wheelWait = false
-            setTimeout(()=>{wheelWait = true}, 800)
+            setTimeout(() => { wheelWait = true }, 800)
         }
     }
-    function viewName() {
+    function viewNamePlayer() {
         const [column, row] = splitCoordinates($(this).eq(0).attr("coordinate"))
         //console.log($(this).eq(0).attr("coordinate"))
         //console.log(board1.board[row][column].occupiedName)
         $('#currentShip').text(board1.board[row][column].occupiedName)
     }
+    function viewNameEnemy() {
+        const [column, row] = splitCoordinates($(this).eq(0).attr("coordinate"))
+        //console.log($(this).eq(0).attr("coordinate"))
+        //console.log(board1.board[row][column].occupiedName)
+        $('#currentShip').text(board2.board[row][column].occupiedName)
+    }
     function AttackCell() {
         console.log($(this).eq(0).attr("coordinate"))
-        board1.attack($(this).eq(0).attr("coordinate"), player1)
+        board2.attack($(this).eq(0).attr("coordinate"), player2)
+        player2.checkRemainingFleet()
     }
     function HoverOverAttack() {
         $(this).eq(0).addClass("selected")
@@ -88,8 +94,11 @@ $(() => {
             $('.grid').off("wheel", hoverOver)
             $('.grid').off("wheel", hoverOff)
             $('.grid').off()
-            $('.grid').hover(viewName)
-            $('.grid').on("click", AttackCell)
+            $('.AWS').hover(viewNamePlayer)
+            //$('.grid').hover(viewName2)
+            //$('.grid').on("click", AttackCell)
+            board2.hideShipCells()
+            $('.BMX').on("click", AttackCell)
             $('.grid').hover(HoverOverAttack, HoverOffAttack)
         }
         else if (successfulPlace) {
@@ -152,18 +161,45 @@ $(() => {
 
     document.querySelector('div').addEventListener("wheel", wheelSpin)
 
-    board1.attack("D5", player1)
-    board1.attack("D5", player1)
-    board1.attack("E9", player1)
+    //board1.attack("D5", player1)
+    //board1.attack("D5", player1)
+    //board1.attack("E9", player1)
 
-    const player2 = new Player("B.M.X.")
+    const player2 = new Player("BMX")
     player2.createFleet()
 
-    const board2 = new Board(10, 15)
+    const board2 = new Board(10, 12, player2.prefix)
     board2.generateVisual()
     player2PlaceShips()
+    //player2AttackShips()
+
     function player2PlaceShips() {
-        //for ()
+        let success = false
+        //let aiShip = player2.fleet[index]
+        for (ship of player2.fleet) { 
+        while (success === false) {
+            const random = Math.ceil(Math.random() * 9)
+            const randomLetter = String.fromCharCode(Math.ceil(Math.random() * 9) + 65)
+            const randomrotation = Math.ceil(Math.random() * 2) - 1
+            if(randomrotation === 1) {
+                ship.rotateClockwise()
+            }
+            console.log(randomrotation)
+            console.log(randomLetter + random)
+            success = board2.placeShip(ship,randomLetter + random)
+        }
+        success = false
     }
 
-})
+    
+}
+function player2AttackShips() {
+        let success = false
+        while (success === false) {
+            const random = Math.ceil(Math.random() * 9)
+            const randomLetter = String.fromCharCode(Math.ceil(Math.random() * 9) + 65)
+            //console.log(randomLetter+random)
+            success = board2.attack(randomLetter+random, player2)
+        }
+    }
+}) */
