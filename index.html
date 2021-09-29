@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img//favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/img//favicon-16x16.png">
   <link rel="manifest" href="/img//site.webmanifest">
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -21,18 +21,23 @@
 </head>
 
 <body>
+  <!-- <section id = "background" style="background-image: url('img/background.png');"> -->
   <div id="main">
 
   </div>
-  <div class="ships">
-    <h3>Selected ship: <span id="currentShip"></span></h3>
-  </div>
-  <section id="music">
-    <audio id="bgm" autoplay="autoplay" loop="loop">
-      <source src="fx/piano.m4a" />
-    </audio>
-  </section>
+  <section id="bottomRow">
+    <div class="ships">
+      <!-- <h3>Selected ship: <span id="currentShip"></span></h3> -->
 
+    </div>
+    <h3>Ships left: <span id="currentShip"></span></h3>
+  </section>
+  <section id="music">
+    <!-- <audio id="bgm" autoplay="autoplay" loop="loop">
+      <source src="fx/piano.m4a" />
+    </audio> -->
+  </section>
+  <!-- </section> -->
 </body>
 
 </html>

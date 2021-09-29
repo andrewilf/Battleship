@@ -145,6 +145,7 @@ class Board {
         this.owner = owner
         this.board = []
         this.$board = $('<div>').attr("id", owner).addClass("container")
+        this.currentShipIndex = 1
         $('#main').append(this.$board)
         for (let i = 0; i < height; i++) {
             this.board.push([])
@@ -175,6 +176,7 @@ class Board {
         //$cell.addClass("grid")
         $cell.addClass(newStatus)
     }
+
     hoverOffCell(cellToCheckCoordinates, newStatus) {
         //console.log(splitCoordinates(cellToCheckCoordinates))
         const [column, row] = cellToCheckCoordinates//splitCoordinates(cellToCheckCoordinates)
@@ -231,6 +233,7 @@ class Board {
                     //console.log("right")
                 } else {
                     blockedFlag = true
+
                 }
             }
         }
@@ -335,12 +338,12 @@ class Board {
         const coordinatesToCheck = []
         let blockedFlag = false
         try {
-        if (this.board[row][column].occupiedName === '') {
-            coordinatesToCheck.push([column, row])
-        }
-        else {
-            blockedFlag = true
-        } 
+            if (this.board[row][column].occupiedName === '') {
+                coordinatesToCheck.push([column, row])
+            }
+            else {
+                blockedFlag = true
+            }
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
                 //console.log(this.board[row][column - front].occupiedName)
                 if (column - front >= 0 && this.board[row][column - front].occupiedName === '') {
@@ -376,13 +379,32 @@ class Board {
         }
         catch (e) {
             blockedFlag = true
-            
+
         }
         if (!blockedFlag) {
             for (const cell of coordinatesToCheck) {
                 console.log(cell)
                 this.updateCell(cell, "ship")
+                const [column, row] = cell
                 this.board[cell[1]][cell[0]].occupiedName = shipObj.name
+                const $cell = this.$board.children().eq(column).children().eq(row)
+                console.log("placing in cell", $cell)
+                const $shipSegment = $('<img>').addClass("shipsegment").attr("src", "img/shipsegment.png")
+                if (shipObj.back === 0 && shipObj.front === 0) {
+                    $shipSegment.addClass("rotate90")
+                }
+                if (shipObj.name.search("AWS") != -1) {
+                    $cell.append($shipSegment)
+                }
+            }
+            if (shipObj.name.search("AWS") != -1) {
+                const $box = $('<div>').append($('<p>').text(shipObj.name))
+                $box.attr("id", shipObj.name).addClass("shipHealth")
+                console.log(mainObjs.currentShipPlaceIndex)
+                const $img = $('<img>').attr("src", "img/ship" + this.currentShipIndex + ".png").addClass("shipImg")
+                $box.append($img)
+                this.currentShipIndex++
+                $('.ships').append($box)
             }
             shipObj.coordinates = coordinatesToCheck
             console.log(shipObj)
@@ -390,81 +412,81 @@ class Board {
         }
         return false
     }
-    placeShipManually(shipObj, middleCoor) {
-        const [column, row] = splitCoordinates(middleCoor)
-        const placedCoordinates = []
-        console.log("row: ", row, "column: ", column)
-        if (!this.board[row][column].occupiedName) {
-            this.board[row][column].occupiedName = shipObj.name
-            placedCoordinates.push([row, column])
-            console.log(this.board[row][column].occupiedName)
+    // placeShipManually(shipObj, middleCoor) {
+    //     const [column, row] = splitCoordinates(middleCoor)
+    //     const placedCoordinates = []
+    //     console.log("row: ", row, "column: ", column)
+    //     if (!this.board[row][column].occupiedName) {
+    //         this.board[row][column].occupiedName = shipObj.name
+    //         placedCoordinates.push([row, column])
+    //         console.log(this.board[row][column].occupiedName)
 
-            for (let front = 1; front <= shipObj.front; front++) {
-                if (!this.board[row][column - front].occupiedName) {
-                    this.board[row][column - front].occupiedName = shipObj.name
-                    placedCoordinates.push([row, column - front])
-                }
-                else {
-                    console.log("occupied")
-                    break
-                }
-                //console.log(this.board[row][column - front].occupiedName)
-            }
-            for (let back = 1; back <= shipObj.back; back++) {
-                if (!this.board[row][column + back].occupiedName) {
-                    this.board[row][column + back].occupiedName = shipObj.name
-                    placedCoordinates.push([row, column + back])
-                }
-                else {
-                    console.log("occupied")
-                    break
-                }
-                //console.log(this.board[row][column + back].occupiedName)
-            }
-            for (let left = 1; left <= shipObj.left; left++) {
-                if (!this.board[row - left][column].occupiedName) {
-                    this.board[row - left][column].occupiedName = shipObj.name
-                    placedCoordinates.push([row - left, column])
-                }
-                else {
-                    console.log("occupied")
-                    break
-                }
-                //console.log(this.board[row - left][column].occupiedName)
-            }
-            for (let right = 1; right <= shipObj.right; right++) {
-                if (!this.board[row + right][column].occupiedName) {
-                    this.board[row + right][column].occupiedName = shipObj.name
-                    placedCoordinates.push([row + right, column])
-                }
-                else {
-                    console.log("occupied")
-                    break
-                }
-                console.log(this.board[row + right][column].occupiedName)
-            }
-            if (placedCoordinates.length != (shipObj.front + shipObj.back + shipObj.right + shipObj.left + 1)) {
-                console.log(placedCoordinates)
-                console.log("ship cannot be placed")
-                for (const coordinates of placedCoordinates) {
-                    this.board[coordinates[0]][coordinates[1]].occupiedName = ""
-                }
-                return false
-            }
-            console.log("success")
-            for (const cell of placedCoordinates) {
-                console.log(cell)
-                this.updateCell([cell[1], cell[0]], "ship")
-            }
-            shipObj.coordinates = placedCoordinates
-            console.log(shipObj)
-            return true
-        }
-        else {
-            console.log("origin is occupied")
-            return false
-        }
-    }
+    //         for (let front = 1; front <= shipObj.front; front++) {
+    //             if (!this.board[row][column - front].occupiedName) {
+    //                 this.board[row][column - front].occupiedName = shipObj.name
+    //                 placedCoordinates.push([row, column - front])
+    //             }
+    //             else {
+    //                 console.log("occupied")
+    //                 break
+    //             }
+    //             //console.log(this.board[row][column - front].occupiedName)
+    //         }
+    //         for (let back = 1; back <= shipObj.back; back++) {
+    //             if (!this.board[row][column + back].occupiedName) {
+    //                 this.board[row][column + back].occupiedName = shipObj.name
+    //                 placedCoordinates.push([row, column + back])
+    //             }
+    //             else {
+    //                 console.log("occupied")
+    //                 break
+    //             }
+    //             //console.log(this.board[row][column + back].occupiedName)
+    //         }
+    //         for (let left = 1; left <= shipObj.left; left++) {
+    //             if (!this.board[row - left][column].occupiedName) {
+    //                 this.board[row - left][column].occupiedName = shipObj.name
+    //                 placedCoordinates.push([row - left, column])
+    //             }
+    //             else {
+    //                 console.log("occupied")
+    //                 break
+    //             }
+    //             //console.log(this.board[row - left][column].occupiedName)
+    //         }
+    //         for (let right = 1; right <= shipObj.right; right++) {
+    //             if (!this.board[row + right][column].occupiedName) {
+    //                 this.board[row + right][column].occupiedName = shipObj.name
+    //                 placedCoordinates.push([row + right, column])
+    //             }
+    //             else {
+    //                 console.log("occupied")
+    //                 break
+    //             }
+    //             console.log(this.board[row + right][column].occupiedName)
+    //         }
+    //         if (placedCoordinates.length != (shipObj.front + shipObj.back + shipObj.right + shipObj.left + 1)) {
+    //             console.log(placedCoordinates)
+    //             console.log("ship cannot be placed")
+    //             for (const coordinates of placedCoordinates) {
+    //                 this.board[coordinates[0]][coordinates[1]].occupiedName = ""
+    //             }
+    //             return false
+    //         }
+    //         console.log("success")
+    //         for (const cell of placedCoordinates) {
+    //             console.log(cell)
+    //             this.updateCell([cell[1], cell[0]], "ship")
+    //         }
+    //         shipObj.coordinates = placedCoordinates
+    //         console.log(shipObj)
+    //         return true
+    //     }
+    //     else {
+    //         console.log("origin is occupied")
+    //         return false
+    //     }
+    // }
     //placement
     attackEnemy(selectedCoordinates, targetPlayer) {
         console.log("enemy attacks")
@@ -530,7 +552,7 @@ class Board {
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
             console.log(shipAlive)
-            
+
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("you sunk my battleship")
@@ -544,7 +566,7 @@ class Board {
         }
         else {
             $target.addClass("missed")
-            
+
             return true
         }
     }
@@ -662,7 +684,7 @@ class Player {
         const index = this.fleet.findIndex((ship) => ship.name === destroyedShipName)
         if (index !== -1) {
             console.log("removing", this.fleet[index])
-            this.fleet.splice(index, 1, )
+            this.fleet.splice(index, 1,)
         }
         else {
             console.error("cannot remove a ship which does not exist")

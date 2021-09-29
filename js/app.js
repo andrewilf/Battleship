@@ -18,7 +18,7 @@ const mainObjs = {
         this.player2.createFleet()
     },
     initBoard: () => {
-        this.board1 = new Board(6, 6, this.player1.prefix)
+        this.board1 = new Board(8, 8, this.player1.prefix)
         this.board2 = new Board(9, 9, this.player2.prefix)
         this.board1.generateVisual()
         this.board2.generateVisual()
@@ -64,7 +64,8 @@ const mainObjs = {
     attackPlayer2: () => {
 
         $('.' + player2.prefix).off("click", AttackCell)
-        player2AttackShips()
+        setTimeout(() => { player2AttackShips() }, 1000)
+
         //$('.' + player2.prefix).on("click", player2AttackShips)
     },
     gameOver: () => {
@@ -84,7 +85,7 @@ function hoverOverPlacing() {
     //if (mainObjs.wheelCounter === 0) {
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     mainObjs.wheelCounter = 0
-    play()
+    //play()
     //}
     //mainObjs.wheelCounter = 0
 }
@@ -159,14 +160,15 @@ function AttackCell() {
     if (mainObjs.gameOver()) {
         const attack = board2.attack($(this).eq(0).attr("coordinate"), player2)
         console.log(attack)
-        if (!mainObjs.gameOver()) {
+        if (attack) {
+            if (!mainObjs.gameOver()) {
 
-            alert("game over, you win")
+                alert("game over, you win")
+            }
+            if (attack[1] !== "hit") {
+                mainObjs.attackPlayer2()
+            }
         }
-        if (attack[1] !== "hit") {
-            mainObjs.attackPlayer2()
-        }
-
     }
 
 }
@@ -182,19 +184,24 @@ function player2AttackShips() {
     if (mainObjs.gameOver()) {
         //alert("game continues")
         let success = false
-        while (success === false) {
-            const randomNumber = Math.ceil(Math.random() * board1.height)
-            const randomLetter = String.fromCharCode(Math.ceil(Math.random() * board1.width) + 64)
-            //console.log(randomLetter+random)
-            success = board1.attackEnemy(randomLetter + randomNumber, player1)
-            if (success[1] === "hit") {
-                success = false
-            }
-            if (!mainObjs.gameOver()) {
-                alert("game over, you lose")
-                break
-            }
+        //while (success === false) {
+        const randomNumber = Math.ceil(Math.random() * board1.height)
+        const randomLetter = String.fromCharCode(Math.ceil(Math.random() * board1.width) + 64)
+        //console.log(randomLetter+random)
+        success = board1.attackEnemy(randomLetter + randomNumber, player1)
+        if (success[1] === "hit") {
+            success = "again"
         }
+        if (!mainObjs.gameOver()) {
+            alert("game over, you lose")
+
+        }
+        if (success === "again") {
+            setTimeout(player2AttackShips, 1500)
+        } else if (success === false) {
+            player2AttackShips()
+        }
+        //}
         console.log("game over?: ", mainObjs.gameOver())
         if (mainObjs.gameOver()) {
             mainObjs.attackPlayer1()
@@ -203,23 +210,22 @@ function player2AttackShips() {
 
 
 }
-load()
-load2()
+// load()
+// load2()
 $(() => {
-    const button = document.createElement('button')
-    button.innerHTML = "toggle music"
-    button.addEventListener("click", (() => {
-        //console.log($('#bgm')[0].paused)
-        if (!$('#bgm')[0].paused) {
-            $('#bgm')[0].pause()
-        }
-        else {
-            $('#bgm')[0].load()
-            $('#bgm')[0].play()
-        }
-    }))
-    document.body.append(button)
-
+    // const button = document.createElement('button')
+    // button.innerHTML = "toggle music"
+    // button.addEventListener("click", (() => {
+    //     //console.log($('#bgm')[0].paused)
+    //     if (!$('#bgm')[0].paused) {
+    //         $('#bgm')[0].pause()
+    //     }
+    //     else {
+    //         $('#bgm')[0].load()
+    //         $('#bgm')[0].play()
+    //     }
+    // }))
+    // document.body.append(button)
     mainObjs.initPlayers()
     mainObjs.initBoard()
     mainObjs.placeShipsPlayer2()
