@@ -3,15 +3,15 @@ const shipNames = {
     availableNames: [
         'Czarevitch',
         'Salsa',
-        'Gal-Pal',
+        'Gal Pal',
         'Pequest',
-        'Isidore-Cameleyre',
+        'Isidore Cameleyre',
         'Almkerk',
         'Arnaldo',
         'Shiromine Maru',
         'BRAVADO',
         'Aruba',
-        'Jib & Tonic',
+        'Jib n Tonic',
         'Amiral Sallandrouze de Lamornaix',
         'Agios Georgios',
         'Brighton',
@@ -19,13 +19,13 @@ const shipNames = {
         'Murmanets',
         'Pinebay',
         'Whonos',
-        'Rover-1',
+        'Rover 1',
         'Our Solitude',
         'Speedlink Vanguard',
         'Delpa II',
         'Sea Skank',
         'Ms Miriam',
-        'Dewy\'s bouey',
+        'Dewys bouey',
         'Warmond',
         'Almoural',
         'Klarelfvan',
@@ -37,7 +37,7 @@ const shipNames = {
         'Anna Sophia',
         'Newhall Hills',
         'Adler',
-        'Con-Tract-Oar',
+        'Con Tract Oar',
         'Bombard',
         'Martin Van Buren',
         'Pellegrini',
@@ -398,13 +398,18 @@ class Board {
                 }
             }
             if (shipObj.name.search("AWS") != -1) {
+                const shipNameID = shipObj.name.replaceAll(" ", "")
                 const $box = $('<div>').append($('<p>').text(shipObj.name))
-                $box.attr("id", shipObj.name).addClass("shipHealth")
+                $box.attr("id", shipNameID).addClass("shipHealth")
                 console.log(mainObjs.currentShipPlaceIndex)
                 const $img = $('<img>').attr("src", "img/ship" + this.currentShipIndex + ".png").addClass("shipImg")
                 $box.append($img)
                 this.currentShipIndex++
                 $('.ships').append($box)
+            }
+            else if(shipObj.name.search("BMX") != -1) {
+                const $img = $('<img>').attr("src", "img/shipsegment.png").addClass("enemy")
+                $('#enemyShips').append($img)
             }
             shipObj.coordinates = coordinatesToCheck
             console.log(shipObj)
@@ -510,11 +515,14 @@ class Board {
             console.log(targetPlayer.fleet.find(element => element.name == shipName))
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
+            const shipNameID = '#'+ shipObj.name.replaceAll(" ", "")
+            console.log($(shipNameID), shipNameID)
+            $(shipNameID).eq(0).children().eq(1).effect( "shake" , { direction: "right", times: 5, distance: 7})
             console.log(shipAlive)
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("your battleship sunk")
-                alert("your battleship sunk")
+                //alert("your battleship sunk")
                 for (const cell of shipObj.coordinates) {
                     console.log(cell)
                     this.updateCell([cell[0], cell[1]], "dead")
@@ -552,11 +560,11 @@ class Board {
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
             console.log(shipAlive)
-
+            
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("you sunk my battleship")
-                alert("you sunk my battleship")
+                //alert("you sunk my battleship")
                 // for (const cell of shipObj.coordinates) {
                 //     console.log(cell)
                 //     this.updateCell([cell[0], cell[1]], "dead")
@@ -684,7 +692,19 @@ class Player {
         const index = this.fleet.findIndex((ship) => ship.name === destroyedShipName)
         if (index !== -1) {
             console.log("removing", this.fleet[index])
+            if (this.prefix === "BMX") {
+                $('#enemyShips').children().eq(-1).effect( "shake" , { direction: "right", times: 5, distance: 10})
+                setTimeout(()=>{$('#enemyShips').children().eq(-1).remove()}, 1000)
+
+                
+            }else if (this.prefix === "AWS") {
+                const shipNameID = "#" + this.fleet[index].name.replaceAll(" ", "")
+                console.log($(shipNameID).children())
+                setTimeout(()=>{$(shipNameID).children().eq(1).addClass("destroyedImg")}, 1000)
+                //.css("filter","grayscale(100%)")
+            }
             this.fleet.splice(index, 1,)
+            
         }
         else {
             console.error("cannot remove a ship which does not exist")

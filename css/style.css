@@ -59,6 +59,7 @@
 .ships {
     display: flex;
     margin-top: 10px;
+    width: 60%;
     
 }
 
@@ -96,6 +97,11 @@ img {
     
 }
 
+.destroyedImg {
+    filter: grayscale(100%);
+    
+}
+
 #main {
     display: flex;
     height: 100%;
@@ -103,6 +109,18 @@ img {
     justify-content: space-evenly;
     align-items: center;
     
+}
+
+#enemyShips {
+    justify-content: flex-end;
+    display: flex;
+}
+
+.enemy {
+    width: 30px;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #bottomRow {

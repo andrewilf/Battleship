@@ -18,7 +18,7 @@ const mainObjs = {
         this.player2.createFleet()
     },
     initBoard: () => {
-        this.board1 = new Board(8, 8, this.player1.prefix)
+        this.board1 = new Board(6, 6, this.player1.prefix)
         this.board2 = new Board(9, 9, this.player2.prefix)
         this.board1.generateVisual()
         this.board2.generateVisual()
@@ -200,12 +200,12 @@ function player2AttackShips() {
             setTimeout(player2AttackShips, 1500)
         } else if (success === false) {
             player2AttackShips()
-        }
-        //}
-        console.log("game over?: ", mainObjs.gameOver())
-        if (mainObjs.gameOver()) {
+        } else if (mainObjs.gameOver()) {
             mainObjs.attackPlayer1()
         }
+        //}
+       // console.log("game over?: ", mainObjs.gameOver())
+        
     }
 
 
