@@ -101,8 +101,10 @@ function placeShipDown() {
     board1.clearAllhoverCells()
     const successfulPlace = board1.placeShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
+    
     wheelCounter = 0
     if (successfulPlace && currentShipPlaceIndex < player1.fleet.length) {
+        board1.refreshPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
         currentShipPlaceIndex++
         currentShipPlace = player1.fleet[currentShipPlaceIndex]
     }
@@ -138,6 +140,7 @@ function rotateShip() {
     //wheelCounter++
     console.log(mainObjs.wheelCounter)
     if (mainObjs.wheelCounter > 2 && mainObjs.wheelWait === true) {
+        board1.clearAllhoverCells()
         board1.refreshPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
         currentShipPlace.rotateAntiClockwise()
         board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
@@ -146,6 +149,7 @@ function rotateShip() {
         setTimeout(() => { mainObjs.wheelWait = true }, 800)
     }
     else if (mainObjs.wheelCounter <= -2 && mainObjs.wheelWait === true) {
+        board1.clearAllhoverCells()
         board1.refreshPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
         currentShipPlace.rotateClockwise()
         board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
@@ -231,7 +235,24 @@ $(() => {
     mainObjs.placeShipsPlayer2()
     mainObjs.PlaceShipsPlayer1()
 
-
+    let target = 100
+    let i = target
+            if (i == target && target >= 0) {
+                let elem2 = document.getElementsByClassName("healthBar")
+                let elem = elem2[0]
+                let width = target
+                let id = setInterval(frame, 7)
+                function frame() {
+                    if (width <= target - 50) {
+                        clearInterval(id)
+                        console.log(target)
+                        target -= 50
+                    } else {
+                        width--;
+                        elem.style.width = width + "%"
+                    }
+                }
+            }
 
 
 })

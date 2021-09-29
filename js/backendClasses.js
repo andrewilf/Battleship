@@ -198,6 +198,7 @@ class Board {
         }
         else {
             blockedFlag = true
+            coordinatesToCheck.push([column, row])
         } try {
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
                 //console.log(this.board[row][column - front].occupiedName)
@@ -207,8 +208,10 @@ class Board {
                 }
                 else {
                     blockedFlag = true
+                    if (column - front >= 0) {
+                    coordinatesToCheck.push([column - front, row])
 
-                }
+                }}
             }
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
                 if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
@@ -217,6 +220,7 @@ class Board {
                 }
                 else {
                     blockedFlag = true
+                    coordinatesToCheck.push([column + back, row])
                 }
             }
             for (let left = 1; left <= shipObj.left && shipObj.left !== 0; left++) {
@@ -225,7 +229,9 @@ class Board {
                     //console.log("left")
                 } else {
                     blockedFlag = true
-                }
+                    if (row - left >= 0) {
+                    coordinatesToCheck.push([column, row - left])
+                }}
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
                 if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
@@ -233,6 +239,7 @@ class Board {
                     //console.log("right")
                 } else {
                     blockedFlag = true
+                    coordinatesToCheck.push([column, row + right])
 
                 }
             }
@@ -264,6 +271,7 @@ class Board {
         }
         else {
             blockedFlag = true
+            coordinatesToCheck.push([column, row])
         } try {
             for (let front = 1; front <= shipObj.front && shipObj.front !== 0; front++) {
                 //console.log(this.board[row][column - front].occupiedName)
@@ -272,7 +280,9 @@ class Board {
                 }
                 else {
                     blockedFlag = true
-
+                    if (column - front >= 0) {
+                        coordinatesToCheck.push([column - front, row])
+                    }
                 }
             }
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
@@ -281,6 +291,7 @@ class Board {
                 }
                 else {
                     blockedFlag = true
+                    coordinatesToCheck.push([column + back, row])
                 }
             }
             for (let left = 1; left <= shipObj.left && shipObj.left !== 0; left++) {
@@ -288,6 +299,9 @@ class Board {
                     coordinatesToCheck.push([column, row - left])
                 } else {
                     blockedFlag = true
+                    if (row - left >= 0) {
+                        coordinatesToCheck.push([column, row - left])
+                    }
                 }
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
@@ -295,6 +309,7 @@ class Board {
                     coordinatesToCheck.push([column, row + right])
                 } else {
                     blockedFlag = true
+                    coordinatesToCheck.push([column, row + right])
                 }
             }
         }
@@ -407,7 +422,7 @@ class Board {
                 this.currentShipIndex++
                 $('.ships').append($box)
             }
-            else if(shipObj.name.search("BMX") != -1) {
+            else if (shipObj.name.search("BMX") != -1) {
                 const $img = $('<img>').attr("src", "img/shipsegment.png").addClass("enemy")
                 $('#enemyShips').append($img)
             }
@@ -515,9 +530,9 @@ class Board {
             console.log(targetPlayer.fleet.find(element => element.name == shipName))
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
-            const shipNameID = '#'+ shipObj.name.replaceAll(" ", "")
+            const shipNameID = '#' + shipObj.name.replaceAll(" ", "")
             console.log($(shipNameID), shipNameID)
-            $(shipNameID).eq(0).children().eq(1).effect( "shake" , { direction: "right", times: 5, distance: 7})
+            $(shipNameID).eq(0).children().eq(1).effect("shake", { direction: "right", times: 5, distance: 7 })
             console.log(shipAlive)
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
@@ -560,7 +575,7 @@ class Board {
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
             console.log(shipAlive)
-            
+
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("you sunk my battleship")
@@ -693,18 +708,18 @@ class Player {
         if (index !== -1) {
             console.log("removing", this.fleet[index])
             if (this.prefix === "BMX") {
-                $('#enemyShips').children().eq(-1).effect( "shake" , { direction: "right", times: 5, distance: 10})
-                setTimeout(()=>{$('#enemyShips').children().eq(-1).remove()}, 1000)
+                $('#enemyShips').children().eq(-1).effect("shake", { direction: "right", times: 5, distance: 10 })
+                setTimeout(() => { $('#enemyShips').children().eq(-1).remove() }, 1000)
 
-                
-            }else if (this.prefix === "AWS") {
+
+            } else if (this.prefix === "AWS") {
                 const shipNameID = "#" + this.fleet[index].name.replaceAll(" ", "")
                 console.log($(shipNameID).children())
-                setTimeout(()=>{$(shipNameID).children().eq(1).addClass("destroyedImg")}, 1000)
+                setTimeout(() => { $(shipNameID).children().eq(1).addClass("destroyedImg") }, 1000)
                 //.css("filter","grayscale(100%)")
             }
             this.fleet.splice(index, 1,)
-            
+
         }
         else {
             console.error("cannot remove a ship which does not exist")

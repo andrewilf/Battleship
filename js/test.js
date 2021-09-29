@@ -238,4 +238,26 @@ div.addEventListener('click', function (e) {
 // highlight div element
 highlight(div);
 
+
+
+
 })
+
+
+// let i = target.health
+//         if (i == target.health && target.health >= 0) {
+//             let elem = document.getElementById(target.healthBarID)
+//             let width = target.health
+//             let id = setInterval(frame, 7)
+//             function frame() {
+//                 if (width <= target.health - chosenWeaponDamage) {
+//                     clearInterval(id)
+//                     console.log(target.health)
+//                     target.health -= chosenWeaponDamage
+//                     checkWinner()
+//                 } else {
+//                     width--;
+//                     elem.style.width = width + "%"
+//                 }
+//             }
+//         }
