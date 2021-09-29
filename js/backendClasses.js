@@ -533,8 +533,11 @@ class Board {
             const shipNameID = '#' + shipObj.name.replaceAll(" ", "")
             console.log($(shipNameID), shipNameID)
             $(shipNameID).eq(0).children().eq(1).effect("shake", { direction: "right", times: 5, distance: 7 })
+            //$(shipNameID).effect("highlight", {color: 'orange'}, 800)
             console.log(shipAlive)
             if (!shipAlive) {
+                $(shipNameID).effect("highlight", {color: 'red'}, 800)
+                setTimeout(() => { $(shipNameID).children().eq(1).addClass("destroyedImg") }, 200)
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("your battleship sunk")
                 //alert("your battleship sunk")
@@ -542,6 +545,9 @@ class Board {
                     console.log(cell)
                     this.updateCell([cell[0], cell[1]], "dead")
                 }
+            }
+            else {
+                $(shipNameID).effect("highlight", {color: 'orange'}, 800)
             }
             return [true, "hit"]
         }
@@ -715,7 +721,7 @@ class Player {
             } else if (this.prefix === "AWS") {
                 const shipNameID = "#" + this.fleet[index].name.replaceAll(" ", "")
                 console.log($(shipNameID).children())
-                setTimeout(() => { $(shipNameID).children().eq(1).addClass("destroyedImg") }, 1000)
+                
                 //.css("filter","grayscale(100%)")
             }
             this.fleet.splice(index, 1,)
