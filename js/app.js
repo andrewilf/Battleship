@@ -85,6 +85,9 @@ function hoverOverPlacing() {
     //if (mainObjs.wheelCounter === 0) {
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     mainObjs.wheelCounter = 0
+    clickHover.pause();
+    clickHover.currentTime = 0;
+    clickHover.play()
     //play()
     //}
     //mainObjs.wheelCounter = 0
@@ -100,6 +103,12 @@ function hoverOffPlacing() {
 function placeShipDown() {
     board1.clearAllhoverCells()
     const successfulPlace = board1.placeShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
+    if(successfulPlace) {
+        placeDrum.pause();
+        placeDrum.currentTime = 0;
+        placeDrum.play()
+    }
+    
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     
     wheelCounter = 0
@@ -165,6 +174,9 @@ function AttackCell() {
         const attack = board2.attack($(this).eq(0).attr("coordinate"), player2)
         console.log(attack)
         if (attack) {
+            gunfire1.pause();
+            gunfire1.currentTime = 0;
+            gunfire1.play()
             if (!mainObjs.gameOver()) {
 
                 alert("game over, you win")
@@ -193,7 +205,13 @@ function player2AttackShips() {
         const randomLetter = String.fromCharCode(Math.ceil(Math.random() * board1.width) + 64)
         //console.log(randomLetter+random)
         success = board1.attackEnemy(randomLetter + randomNumber, player1)
+        if(success) {
+            gunfire1.pause();
+            gunfire1.currentTime = 0;
+            gunfire1.play()
+        }
         if (success[1] === "hit") {
+            
             success = "again"
         }
         if (!mainObjs.gameOver()) {

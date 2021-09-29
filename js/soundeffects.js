@@ -41,7 +41,9 @@ const play2 = () => {
     source.connect(audioCtx.destination);
     source.start()
 }
-
+const clickHover = new Audio('./fx/hoverclick.wav')
+const placeDrum = new Audio('./fx/placedowndrum.wav')
+const gunfire1 = new Audio('./fx/gunfire1.wav')
    // button.addEventListener("click", play)
    // document.body.append(button)
 
