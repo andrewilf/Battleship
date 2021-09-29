@@ -47,7 +47,7 @@ const mainObjs = {
                 //console.log(randomrotation)
                 //console.log(randomLetter + randomNumber)
                 success = board2.placeShip(ship, (randomLetter + randomNumber))
-                console.log(success)
+                console.log("was the ship successfully placed?: ", success)
             }
             success = false
         }
@@ -84,6 +84,7 @@ function hoverOverPlacing() {
     //if (mainObjs.wheelCounter === 0) {
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     mainObjs.wheelCounter = 0
+    play()
     //}
     //mainObjs.wheelCounter = 0
 }
@@ -143,10 +144,10 @@ function rotateShip() {
         mainObjs.wheelWait = false
         setTimeout(() => { mainObjs.wheelWait = true }, 800)
     }
-    else if (mainObjs.wheelCounter < -2 && mainObjs.wheelWait === true) {
+    else if (mainObjs.wheelCounter <= -2 && mainObjs.wheelWait === true) {
         board1.refreshPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
         currentShipPlace.rotateClockwise()
-        board1.checkPlaceShip(currentShip, $(this).eq(0).attr("coordinate"))
+        board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
         mainObjs.wheelCounter = 0
         mainObjs.wheelWait = false
         setTimeout(() => { mainObjs.wheelWait = true }, 800)
@@ -162,12 +163,12 @@ function AttackCell() {
 
             alert("game over, you win")
         }
-        if(attack[1] !== "hit") {
+        if (attack[1] !== "hit") {
             mainObjs.attackPlayer2()
         }
-        
+
     }
-    
+
 }
 function HoverOverAttack() {
     $(this).eq(0).addClass("selected")
@@ -196,19 +197,35 @@ function player2AttackShips() {
         }
         console.log("game over?: ", mainObjs.gameOver())
         if (mainObjs.gameOver()) {
-        mainObjs.attackPlayer1()
+            mainObjs.attackPlayer1()
         }
     }
-    
+
 
 }
-
+load()
+load2()
 $(() => {
+    const button = document.createElement('button')
+    button.innerHTML = "toggle music"
+    button.addEventListener("click", (() => {
+        //console.log($('#bgm')[0].paused)
+        if (!$('#bgm')[0].paused) {
+            $('#bgm')[0].pause()
+        }
+        else {
+            $('#bgm')[0].load()
+            $('#bgm')[0].play()
+        }
+    }))
+    document.body.append(button)
+
     mainObjs.initPlayers()
     mainObjs.initBoard()
     mainObjs.placeShipsPlayer2()
     mainObjs.PlaceShipsPlayer1()
-    
+
+
 
 
 })
