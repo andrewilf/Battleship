@@ -11,7 +11,7 @@
   <link rel="manifest" href="/img//site.webmanifest">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="js/backendClasses.js" charset="utf-8"></script>
   <script src="js/soundeffects.js" charset="utf-8"></script>
@@ -22,34 +22,37 @@
 </head>
 
 <body>
-  <!-- <section id = "background" style="background-image: url('img/background.png');"> -->
-  <div id="main">
+  <section id="background" style="background-image: url('img/background.png');">
+    <button id="restart">Restart</button>
 
-  </div>
-  <section id="bottomRow">
-    <div class="ships">
-      <!-- <h3>Selected ship: <span id="currentShip"></span></h3> -->
+    <div id="main">
 
     </div>
-    <h3>Ships left: </h3>
-    <span id="enemyShips"></span>
-  </section>
-  <section id="music">
-    <!-- <audio id="bgm" autoplay="autoplay" loop="loop">
+    <section id="bottomRow">
+      <div id="ships">
+        <!-- <h3>Selected ship: <span id="currentShip"></span></h3> -->
+
+      </div>
+      <h3>Ships left: </h3>
+      <span id="enemyShips"></span>
+    </section>
+    <section id="music">
+      <!-- <audio id="bgm" autoplay="autoplay" loop="loop">
       <source src="fx/piano.m4a" />
     </audio> -->
+    </section>
+    <div id="textscroll"><p></p></div>
+    <!-- </section> -->
+
+
+    <!-- <div class="damagedBar">
+    <div class="healthBar"></div>
+  </div>
+
+  <div class="damagedBar">
+    <div class="healthBar"></div>
+  </div> -->
   </section>
-  <!-- </section> -->
-  <button id="restart">Restart</button>
-
-  <div class="damagedBar">
-    <div class="healthBar"></div>
-  </div>
-
-  <div class="damagedBar">
-    <div class="healthBar"></div>
-  </div>
-
 </body>
 
 </html>

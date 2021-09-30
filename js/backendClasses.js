@@ -54,6 +54,9 @@ const shipNames = {
     ],
     //ship names which are taken are added to this array
     takenNames: [],
+    clearTakenNames: function () {
+        this.takenNames = []
+    },
     //method which choses a ship name, if not taken, add to taken names array and return the value. Otherwise try again
     asignName: function () {
         let done = false
@@ -209,9 +212,10 @@ class Board {
                 else {
                     blockedFlag = true
                     if (column - front >= 0) {
-                    coordinatesToCheck.push([column - front, row])
+                        coordinatesToCheck.push([column - front, row])
 
-                }}
+                    }
+                }
             }
             for (let back = 1; back <= shipObj.back && shipObj.back !== 0; back++) {
                 if (column + back <= this.width && this.board[row][column + back].occupiedName === '') {
@@ -230,8 +234,9 @@ class Board {
                 } else {
                     blockedFlag = true
                     if (row - left >= 0) {
-                    coordinatesToCheck.push([column, row - left])
-                }}
+                        coordinatesToCheck.push([column, row - left])
+                    }
+                }
             }
             for (let right = 1; right <= shipObj.right && shipObj.right !== 0; right++) {
                 if (row + right <= this.height && this.board[row + right][column].occupiedName === '') {
@@ -347,6 +352,20 @@ class Board {
             }
         }
     }
+
+    RevealAllShips() {
+        for (let column = 0; column < this.width; column++) {
+            for (let row = 0; row < this.height; row++) {
+                const $cell = this.$board.children().eq(row).children().eq(column)
+                //$cell.removeClass("unplaceable")
+                //$cell.removeClass("ship")
+                if ($cell.attr("class").search("ship")!=-1) {
+                    $cell.addClass("revealShip")
+                }
+            }
+        }
+    }
+
     placeShip(shipObj, middleCoordinates) {
         //console.log(middleCoordinates)
         const [column, row] = splitCoordinates(middleCoordinates)
@@ -409,6 +428,7 @@ class Board {
                     $shipSegment.addClass("rotate90")
                 }
                 if (shipObj.name.search("AWS") != -1) {
+                    Narrate(shipObj.name + " reporting for duty")
                     $cell.append($shipSegment)
                 }
             }
@@ -419,8 +439,11 @@ class Board {
                 console.log(mainObjs.currentShipPlaceIndex)
                 const $img = $('<img>').attr("src", "img/ship" + this.currentShipIndex + ".png").addClass("shipImg")
                 $box.append($img)
+
+                const $healthBar = $('<div>').addClass("damagedBar").append($('<div>').addClass("healthBar").attr("id", "bar" + shipNameID))
+                $box.append($healthBar)
                 this.currentShipIndex++
-                $('.ships').append($box)
+                $('#ships').append($box)
             }
             else if (shipObj.name.search("BMX") != -1) {
                 const $img = $('<img>').attr("src", "img/shipsegment.png").addClass("enemy")
@@ -531,15 +554,20 @@ class Board {
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
             const shipNameID = '#' + shipObj.name.replaceAll(" ", "")
+           
+            
+            depletHealthBar(shipObj, 1)
+
             console.log($(shipNameID), shipNameID)
             $(shipNameID).eq(0).children().eq(1).effect("shake", { direction: "right", times: 5, distance: 7 })
             //$(shipNameID).effect("highlight", {color: 'orange'}, 800)
             console.log(shipAlive)
             if (!shipAlive) {
-                $(shipNameID).effect("highlight", {color: 'red'}, 800)
+                $(shipNameID).effect("highlight", { color: 'red' }, 800)
                 setTimeout(() => { $(shipNameID).children().eq(1).addClass("destroyedImg") }, 200)
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("your battleship sunk")
+                Narrate(shipName + " was sunk!")
                 //alert("your battleship sunk")
                 for (const cell of shipObj.coordinates) {
                     console.log(cell)
@@ -547,12 +575,14 @@ class Board {
                 }
             }
             else {
-                $(shipNameID).effect("highlight", {color: 'orange'}, 800)
+                $(shipNameID).effect("highlight", { color: 'orange' }, 800)
+                Narrate(shipName + " was hit!")
             }
             return [true, "hit"]
         }
         else {
             $target.addClass("missed")
+            Narrate("Admiral Bad Guy missed!")
             return true
         }
         // console.log(this.board)
@@ -580,16 +610,21 @@ class Board {
             console.log(targetPlayer.fleet.find(element => element.name == shipName))
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
+
             console.log(shipAlive)
 
             if (!shipAlive) {
                 targetPlayer.shipDestroyed(shipObj.name)
                 console.log("you sunk my battleship")
+                Narrate("Enemy " + shipName + " was sunk!")
                 //alert("you sunk my battleship")
                 // for (const cell of shipObj.coordinates) {
                 //     console.log(cell)
                 //     this.updateCell([cell[0], cell[1]], "dead")
                 // }
+            }
+            else {
+                Narrate("An enemy ship was hit!")
             }
             return [true, "hit"]
         }
@@ -606,6 +641,7 @@ class Ship {
     constructor(type, name, length, attack = 1, canons = 1) {
         this.type = type
         this.name = name
+        this.length = length
         //coordinates of the battleship. The four attributes are required to allow rotating the ship
         this.front = Math.ceil((length - 1) / 2)
         this.back = Math.floor((length - 1) / 2)
@@ -721,7 +757,7 @@ class Player {
             } else if (this.prefix === "AWS") {
                 const shipNameID = "#" + this.fleet[index].name.replaceAll(" ", "")
                 console.log($(shipNameID).children())
-                
+
                 //.css("filter","grayscale(100%)")
             }
             this.fleet.splice(index, 1,)
@@ -738,5 +774,52 @@ class Player {
             return false
         }
         return true
+    }
+}
+
+
+function depletHealthBar(shipObj, damage) {
+    let health = shipObj.health
+    let maxHealth = shipObj.length
+    health = ((health + damage) / maxHealth) * 100
+    damage = (damage / maxHealth) * 100
+    let i = health
+    if (i == health && health >= 0) {
+        //let elem2 = document.getElementsByClassName("healthBar")
+        const shipNameID = shipObj.name.replaceAll(" ", "")
+        let elem = $("#bar" + shipNameID)
+        // let elem = elem2[0]
+        let width = health
+        let id = setInterval(frame, 7)
+        function frame() {
+            if (width <= health - damage) {
+                clearInterval(id)
+                // console.log(health)
+                // health -= damage
+            } else {
+                width--;
+                //elem.style.width = width + "%"
+                elem.css("width", width + "%")
+            }
+        }
+    }
+}
+
+function Narrate(stringToAdd, clearFlag = false) {
+    let narrateString = ""
+    let nameLength = narrateString.length
+    //document.querySelector("#narrate").value = narrateString
+    let textBox = setInterval(frame, 7);
+    function frame() {
+        if (narrateString == (stringToAdd)) {
+            clearInterval(textBox)
+        } else {
+            narrateString += stringToAdd[narrateString.length - nameLength]
+        }
+        //document.querySelector("#narrate").value = narrateString
+        $('#textscroll').text(narrateString)
+    }
+    if (clearFlag) {
+        //setTimeout(()=> {$('#textscroll').text("")}, 1000)
     }
 }

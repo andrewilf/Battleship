@@ -74,6 +74,7 @@ const mainObjs = {
         }
         else {
             $('.' + player2.prefix).off("click", AttackCell)
+            board2.RevealAllShips()
             return false
         }
     }
@@ -85,7 +86,7 @@ function hoverOverPlacing() {
     //if (mainObjs.wheelCounter === 0) {
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     mainObjs.wheelCounter = 0
-    clickHover.pause();
+    //clickHover.pause();
     clickHover.currentTime = 0;
     clickHover.play()
     //play()
@@ -103,14 +104,14 @@ function hoverOffPlacing() {
 function placeShipDown() {
     board1.clearAllhoverCells()
     const successfulPlace = board1.placeShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
-    if(successfulPlace) {
-        placeDrum.pause();
+    if (successfulPlace) {
+        //placeDrum.pause();
         placeDrum.currentTime = 0;
         placeDrum.play()
     }
-    
+
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
-    
+
     wheelCounter = 0
     if (successfulPlace && currentShipPlaceIndex < player1.fleet.length) {
         board1.refreshPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
@@ -174,12 +175,14 @@ function AttackCell() {
         const attack = board2.attack($(this).eq(0).attr("coordinate"), player2)
         console.log(attack)
         if (attack) {
-            gunfire1.pause();
+            //gunfire1.pause();
             gunfire1.currentTime = 0;
             gunfire1.play()
             if (!mainObjs.gameOver()) {
 
-                alert("game over, you win")
+                //alert("game over, you win")
+                
+                setTimeout(()=>{Narrate("Game over, you win!")}, 2000)
             }
             if (attack[1] !== "hit") {
                 mainObjs.attackPlayer2()
@@ -190,6 +193,9 @@ function AttackCell() {
 }
 function HoverOverAttack() {
     $(this).eq(0).addClass("selected")
+    //clickHover.pause();
+    clickHover.currentTime = 0;
+    clickHover.play()
     //console.log($(this).eq(0))
 }
 function HoverOffAttack() {
@@ -205,17 +211,20 @@ function player2AttackShips() {
         const randomLetter = String.fromCharCode(Math.ceil(Math.random() * board1.width) + 64)
         //console.log(randomLetter+random)
         success = board1.attackEnemy(randomLetter + randomNumber, player1)
-        if(success) {
-            gunfire1.pause();
+        if (success) {
+            //gunfire1.pause();
             gunfire1.currentTime = 0;
             gunfire1.play()
         }
         if (success[1] === "hit") {
-            
+
             success = "again"
         }
         if (!mainObjs.gameOver()) {
-            alert("game over, you lose")
+            //alert("game over, you lose")
+            console.log("game over, you lose")
+            setTimeout(()=>{Narrate("game over, you lose")}, 2000)
+            
 
         }
         if (success === "again") {
@@ -226,8 +235,8 @@ function player2AttackShips() {
             mainObjs.attackPlayer1()
         }
         //}
-       // console.log("game over?: ", mainObjs.gameOver())
-        
+        // console.log("game over?: ", mainObjs.gameOver())
+
     }
 
 
@@ -252,25 +261,24 @@ $(() => {
     mainObjs.initBoard()
     mainObjs.placeShipsPlayer2()
     mainObjs.PlaceShipsPlayer1()
+    Narrate("Place Your ships")
+    $('#restart').on("click", restart)
 
-    let target = 100
-    let i = target
-            if (i == target && target >= 0) {
-                let elem2 = document.getElementsByClassName("healthBar")
-                let elem = elem2[0]
-                let width = target
-                let id = setInterval(frame, 7)
-                function frame() {
-                    if (width <= target - 50) {
-                        clearInterval(id)
-                        console.log(target)
-                        target -= 50
-                    } else {
-                        width--;
-                        elem.style.width = width + "%"
-                    }
-                }
-            }
 
 
 })
+
+function restart () {
+    
+    $('#main').empty()
+    $("#enemyShips").empty()
+    $("#ships").empty()
+    shipNames.clearTakenNames()
+
+    mainObjs.initPlayers()
+    mainObjs.initBoard()
+    mainObjs.placeShipsPlayer2()
+    mainObjs.PlaceShipsPlayer1()
+    //$('#textscroll').text("restart")
+    Narrate("restarting now")
+}
