@@ -44,6 +44,10 @@ const play2 = () => {
 const clickHover = new Audio('./fx/hoverclick.wav')
 const placeDrum = new Audio('./fx/placedowndrum.wav')
 const gunfire1 = new Audio('./fx/gunfire1.wav')
+const attackmissed = new Audio('./fx/attackmissed.wav')
+const victory = new Audio('./fx/victoryclap.wav')
+const defeat = new Audio('./fx/defeat.wav')
+const heartbeat = new Audio('./fx/heartbeat.wav')
    // button.addEventListener("click", play)
    // document.body.append(button)
 

@@ -1,3 +1,10 @@
+const difficulty = {
+    easy: [8,8, 8,8],
+    medium: [7,7, 9, 9],
+    hard: [6,6, 10,10],
+    debug: [5,5, 6,6]
+}
+
 const shipNames = {
     //pool of names which can be called for each ship
     availableNames: [
@@ -356,10 +363,10 @@ class Board {
     RevealAllShips() {
         for (let column = 0; column < this.width; column++) {
             for (let row = 0; row < this.height; row++) {
-                const $cell = this.$board.children().eq(row).children().eq(column)
+                const $cell = this.$board.children().eq(column).children().eq(row)
                 //$cell.removeClass("unplaceable")
                 //$cell.removeClass("ship")
-                if ($cell.attr("class").search("ship")!=-1) {
+                if ($cell.attr("class").search("ship") != -1) {
                     $cell.addClass("revealShip")
                 }
             }
@@ -446,7 +453,7 @@ class Board {
                 $('#ships').append($box)
             }
             else if (shipObj.name.search("BMX") != -1) {
-                const $img = $('<img>').attr("src", "img/shipsegment.png").addClass("enemy")
+                const $img = $('<img>').attr("src", "img/topdownship.png").addClass("enemy")
                 $('#enemyShips').append($img)
             }
             shipObj.coordinates = coordinatesToCheck
@@ -554,8 +561,8 @@ class Board {
             const shipObj = targetPlayer.fleet.find(element => element.name == shipName)
             const shipAlive = shipObj.getDamaged()
             const shipNameID = '#' + shipObj.name.replaceAll(" ", "")
-           
-            
+
+
             depletHealthBar(shipObj, 1)
 
             console.log($(shipNameID), shipNameID)
@@ -583,7 +590,7 @@ class Board {
         else {
             $target.addClass("missed")
             Narrate("Admiral Bad Guy missed!")
-            return true
+            return [true, "missed"]
         }
         // console.log(this.board)
         //console.log($target.attr("class"))
@@ -631,7 +638,7 @@ class Board {
         else {
             $target.addClass("missed")
 
-            return true
+            return [true, "missed"]
         }
     }
 }

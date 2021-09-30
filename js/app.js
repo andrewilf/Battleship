@@ -1,5 +1,6 @@
 // for main game
 const mainObjs = {
+    selectedDifficulty: '',
     player1: "",
     player2: "",
     board1: "",
@@ -12,14 +13,16 @@ const mainObjs = {
     currentShipPlace: "",
     currentShipPlaceIndex: "",
     initPlayers: () => {
+        selectedDifficulty = difficulty.easy
+        console.log(selectedDifficulty)
         this.player1 = new Player("AWS")
         this.player2 = new Player("BMX")
         this.player1.createFleet()
         this.player2.createFleet()
     },
     initBoard: () => {
-        this.board1 = new Board(6, 6, this.player1.prefix)
-        this.board2 = new Board(9, 9, this.player2.prefix)
+        this.board1 = new Board(selectedDifficulty[0], selectedDifficulty[1], this.player1.prefix)
+        this.board2 = new Board(selectedDifficulty[2], selectedDifficulty[3], this.player2.prefix)
         this.board1.generateVisual()
         this.board2.generateVisual()
     },
@@ -58,8 +61,13 @@ const mainObjs = {
         //$('.' + player2.prefix).hover(viewName2)
         //$('.' + player2.prefix).off("click", player2AttackShips)
         $('.' + player2.prefix).on("click", AttackCell)
+        if (player1.fleet.length === 1) {
+            heartbeat.play()
+            heartbeat.loop = true
+        }
         //board2.hideShipCells()
         $('.grid').hover(HoverOverAttack, HoverOffAttack)
+        setTimeout(() => { Narrate("Your turn to attack") }, 1000)
     },
     attackPlayer2: () => {
 
@@ -75,6 +83,7 @@ const mainObjs = {
         else {
             $('.' + player2.prefix).off("click", AttackCell)
             board2.RevealAllShips()
+            heartbeat.pause()
             return false
         }
     }
@@ -176,16 +185,25 @@ function AttackCell() {
         console.log(attack)
         if (attack) {
             //gunfire1.pause();
-            gunfire1.currentTime = 0;
-            gunfire1.play()
+
             if (!mainObjs.gameOver()) {
 
                 //alert("game over, you win")
-                
-                setTimeout(()=>{Narrate("Game over, you win!")}, 2000)
+
+                setTimeout(() => {
+                    Narrate("Game over, you win!")
+                    victory.play()
+                }, 2000)
             }
             if (attack[1] !== "hit") {
+                attackmissed.currentTime = 0
+                attackmissed.play()
                 mainObjs.attackPlayer2()
+            }
+            else if (attack[1] !== "missed") {
+
+                gunfire1.currentTime = 0
+                gunfire1.play()
             }
         }
     }
@@ -213,18 +231,26 @@ function player2AttackShips() {
         success = board1.attackEnemy(randomLetter + randomNumber, player1)
         if (success) {
             //gunfire1.pause();
-            gunfire1.currentTime = 0;
-            gunfire1.play()
+
         }
         if (success[1] === "hit") {
-
+            gunfire1.currentTime = 0;
+            gunfire1.play()
             success = "again"
+        }
+        else if (success[1] === "missed") {
+            attackmissed.currentTime = 0;
+            attackmissed.play()
         }
         if (!mainObjs.gameOver()) {
             //alert("game over, you lose")
             console.log("game over, you lose")
-            setTimeout(()=>{Narrate("game over, you lose")}, 2000)
-            
+
+            setTimeout(() => {
+                Narrate("game over, you lose")
+                defeat.play()
+            }, 2000)
+
 
         }
         if (success === "again") {
@@ -261,15 +287,15 @@ $(() => {
     mainObjs.initBoard()
     mainObjs.placeShipsPlayer2()
     mainObjs.PlaceShipsPlayer1()
-    Narrate("Place Your ships")
+    Narrate("Place Your 5 ships")
     $('#restart').on("click", restart)
 
 
 
 })
 
-function restart () {
-    
+function restart() {
+
     $('#main').empty()
     $("#enemyShips").empty()
     $("#ships").empty()
@@ -280,5 +306,6 @@ function restart () {
     mainObjs.placeShipsPlayer2()
     mainObjs.PlaceShipsPlayer1()
     //$('#textscroll').text("restart")
-    Narrate("restarting now")
+    Narrate("Restarting now")
+    setTimeout(() => { Narrate("Place Your 5 ships") }, 1100)
 }
