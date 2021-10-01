@@ -453,7 +453,9 @@ function about() {
     $('#options').hide()
     $('#background').prepend($('<div>').addClass("side").append(
         $('<img>').attr("src", "img/goodguyadmiral.png").addClass('side')).append($('#textscroll')))
-    $('#textscroll').show().css("width", "60%").css("height", "600px")
-    Narrate("Good morning sailor, my name is Admiral Not Bad Guy and welcome to Battleship. Your mission is to command my fleet of 5 vessels and stop Admiral Bad Guy.", genericBlip, 1)
+    $('#textscroll').show().css("width", "60%").css("height", "200px")
+    Narrate("\
+    Good morning sailor, my name is Admiral Not Bad Guy and welcome to Battleship. Your mission is to command my fleet of 5 vessels and stop Admiral Bad Guy. Place your 5 vessels anywhere in your fleet zone to begin the battle. You and the enemy will take turns to attack like gentlemen, you can only attack coordinates which haven’t been fired at yet. I will not have you wasting ammo. Should you or the enemy land a hit on an opposing vessel, you will be allowed to attack again. The battle ends when either you or that milk drinker’s entire fleet is destroyed. I am counting on you sailor, capitalism itself is at stake.\
+    ", genericBlip, 1)
     $('#restart').text('Back')
 }
