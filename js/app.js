@@ -312,7 +312,7 @@ function player2AttackShips() {
 // load()
 // load2()
 $(() => {
-
+    $('body').css('background-image', 'url(img/backgroundwgeneralbanner.png)')
     $('#textscroll').hide()
     $('h3').hide()
     // mainObjs.initPlayers()
