@@ -115,9 +115,13 @@ function placeShipDown() {
     board1.clearAllhoverCells()
     const successfulPlace = board1.placeShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     if (successfulPlace) {
-        //placeDrum.pause();
-        placeDrum.currentTime = 0;
+        //placeDrum.pause()
+        placeDrum.currentTime = 0
         placeDrum.play()
+    }
+    else {
+        badBlip.currentTime = 0
+        badBlip.play()
     }
 
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
@@ -194,8 +198,27 @@ function AttackCell() {
 
                 setTimeout(() => {
                     Narrate("Game over, you win!")
+                    victory.currentTime = 0
                     victory.play()
-                }, 2000)
+                }, 1500)
+                setTimeout(() => {
+                    //backgroundMusic.pause()
+                    victory.pause()
+                    $('#ships').prepend($('<img>').attr("src", "img/goodguyadmiralhead.png").addClass("shipHealth"))
+                    Narrate("Admiral Not Bad Guy: great job sailor.", goodBlip)
+                }, 6000)
+                setTimeout(() => {
+                    Narrate("Admiral Not Bad Guy: now we can bring capitalism to their land.", goodBlip)
+                }, 8500)
+                setTimeout(() => {
+                    Narrate("Admiral Not Bad Guy: and it's all thanks to you.", goodBlip)
+                }, 11800)
+                setTimeout(() => {
+                    Narrate(":)", goodBlip)
+                }, 15000)
+                setTimeout(() => {
+                    Narrate("Click the restart button on the top right if you want to play again.", genericBlip)
+                }, 17000)
             }
             if (attack[1] !== "hit") {
                 attackmissed.currentTime = 0
@@ -236,8 +259,8 @@ function player2AttackShips() {
 
         }
         if (success[1] === "hit") {
-            gunfire1.currentTime = 0;
-            gunfire1.play()
+            gunfire2.currentTime = 0;
+            gunfire2.play()
             success = "again"
         }
         else if (success[1] === "missed") {
@@ -252,6 +275,23 @@ function player2AttackShips() {
                 Narrate("game over, you lose")
                 defeat.play()
             }, 2000)
+            setTimeout(() => {
+                //backgroundMusic.pause()
+                $('#ships').prepend($('<img>').attr("src", "img/badguyadmiralhead.png").addClass("shipHealth"))
+                Narrate("Admiral Bad Guy: Wait I actually won? I was just firing at random.", badBlip)
+            }, 5000)
+            setTimeout(() => {
+                Narrate("Admiral Bad Guy: Like I don't wear these sunglasses to look cool.", badBlip)
+            }, 8000)
+            setTimeout(() => {
+                Narrate("Admiral Bad Guy: I am legally blind... you may want to get your eyes checked.", badBlip)
+            }, 11000)
+            setTimeout(() => {
+                Narrate(">:)", badBlip)
+            }, 15000)
+            setTimeout(() => {
+                Narrate("Click the restart button on the top right if you want to play again.", genericBlip)
+            }, 17000)
 
 
         }
@@ -284,6 +324,9 @@ $(() => {
     $('#music').on("click", music)
     $('#sound').on("click", sound)
     $('.difficulty').on("click", startGame)
+    $('#cheat').on("click", cheat)
+    $('#about').on("click", about)
+    $('#cheat').hide()
     // var modal = document.getElementById("myModal");
 
     // // Get the button that opens the modal
@@ -313,16 +356,20 @@ $(() => {
 
 function restart() {
     $('body').css('background-image', 'url(img/backgroundwgeneralbanner.png)')
+    $('#background').append($('#textscroll').css("width", "96%").css("height", "37px"))
+    Narrate("")
+    $('.side').remove()
+    $('#restart').text("Restart")
     $('#options').show()
     $('#textscroll').hide()
     $('h3').hide()
-
+    //sound()
     $('#main').empty()
     $("#enemyShips").empty()
     $("#ships").empty()
     shipNames.clearTakenNames()
-
-
+    $('#cheat').hide()
+    
     //$('#textscroll').text("restart")
 
 }
@@ -352,6 +399,7 @@ function sound() {
         genericBlip.muted = true
         goodBlip.muted = true
         badBlip.muted = true
+        gunfire2.muted = true
     }
     else {
         clickHover.muted = false
@@ -364,10 +412,12 @@ function sound() {
         genericBlip.muted = false
         goodBlip.muted = false
         badBlip.muted = false
+        gunfire2.muted = false
     }
 }
 
 function startGame() {
+    $('#cheat').show()
     backgroundMusic.play()
     console.log($(this).attr('mode'))
     chosenDifficulty = $(this).attr('mode')
@@ -382,4 +432,28 @@ function startGame() {
     mainObjs.PlaceShipsPlayer1()
     Narrate("Place Your 5 ships", genericBlip)
     //setTimeout(() => {  }, 1100)
+}
+
+let cheatFlag = false
+
+function cheat() {
+    if (!cheatFlag) {
+        $('.ship').addClass("revealShip")
+        Narrate("Cheat mode activated! Click again to turn off.", genericBlip)
+        cheatFlag = true
+    }
+    else {
+        $('.ship').removeClass("revealShip")
+        cheatFlag = false
+    }
+}
+
+function about() {
+    $('body').css('background-image', 'url(img/background.png)')
+    $('#options').hide()
+    $('#background').prepend($('<div>').addClass("side").append(
+        $('<img>').attr("src", "img/goodguyadmiral.png").addClass('side')).append($('#textscroll')))
+    $('#textscroll').show().css("width", "60%").css("height", "600px")
+    Narrate("Good morning sailor, my name is Admiral Not Bad Guy and welcome to Battleship. Your mission is to command my fleet of 5 vessels and stop Admiral Bad Guy.", genericBlip, 1)
+    $('#restart').text('Back')
 }

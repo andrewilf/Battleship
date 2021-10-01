@@ -1,5 +1,5 @@
 const difficulty = {
-    easy: [8,8, 8,8],
+    easy: [8,8, 7,7],
     medium: [7,7, 9, 9],
     hard: [6,6, 10,10],
     debug: [5,5, 6,6]
@@ -813,11 +813,11 @@ function depletHealthBar(shipObj, damage) {
     }
 }
 
-function Narrate(stringToAdd, speakerSound = 1) {
+function Narrate(stringToAdd, speakerSound = 1, speed = 14) {
     let narrateString = ""
     let nameLength = narrateString.length
     //document.querySelector("#narrate").value = narrateString
-    let textBox = setInterval(frame, 14);
+    let textBox = setInterval(frame, speed);
     function frame() {
         if (narrateString == (stringToAdd)) {
             clearInterval(textBox)

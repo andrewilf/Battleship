@@ -21,7 +21,7 @@ body {
 }
 
 .grid {
-    background-color: aqua;
+    background-color: rgba(121,230,255,0.5);
     height: 35px;
     width: 35px;
     flex-flow: row wrap;
@@ -36,7 +36,7 @@ body {
     background-color: grey;
 }
 .missed {
-    background-color: blue;
+    background-color: rgba(1,76,255,0.5);
 }
 .ship {
     /* background-color: darkmagenta; */
@@ -46,11 +46,11 @@ body {
 }
 
 .revealShip {
-    background-color: purple;
+    background-color: rgba(165,76,255,0.5);
 }
 
 .damaged {
-    background-color: orange;
+    background-color: rgba(255,92,1,1);
     
 }
 .dead {
@@ -163,6 +163,7 @@ img {
       background-color: rgba(0,0,0,0.3);
       border: 2px solid black;
       padding-left: 30px;
+      padding-right: 10px;
       height: 37px;
       color: white;
       font-size: 23px;
@@ -224,3 +225,11 @@ img {
       align-items: center;
   }
 
+  .side {
+    display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin: 0px;
+      padding: 0px;
+      
+  }
