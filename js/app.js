@@ -13,7 +13,8 @@ const mainObjs = {
     currentShipPlace: "",
     currentShipPlaceIndex: "",
     initPlayers: () => {
-        selectedDifficulty = difficulty.easy
+        console.log(chosenDifficulty)
+        selectedDifficulty = difficulty[chosenDifficulty]
         console.log(selectedDifficulty)
         this.player1 = new Player("AWS")
         this.player2 = new Player("BMX")
@@ -31,7 +32,7 @@ const mainObjs = {
         currentShipPlaceIndex = 0
         $('.' + player1.prefix).hover(hoverOverPlacing, hoverOffPlacing)
         $('.' + player1.prefix).on("click", placeShipDown)
-        document.querySelector('div').addEventListener("wheel", wheelSpin)
+        document.querySelector('#main').addEventListener("wheel", wheelSpin)
         //$('.' + player1.prefix).on("wheel", hoverOffPlacing)
         $('.' + player1.prefix).on("wheel", rotateShip)
         //$('.' + player1.prefix).on("wheel", hoverOverPlacing)
@@ -96,7 +97,7 @@ function hoverOverPlacing() {
     board1.checkPlaceShip(currentShipPlace, $(this).eq(0).attr("coordinate"))
     mainObjs.wheelCounter = 0
     //clickHover.pause();
-    clickHover.currentTime = 0;
+    clickHover.currentTime = 0
     clickHover.play()
     //play()
     //}
@@ -129,7 +130,8 @@ function placeShipDown() {
     }
     if (currentShipPlaceIndex == player1.fleet.length) {
         $('.' + player1.prefix).off()
-        document.querySelector('div').removeEventListener("wheel", wheelSpin)
+        document.querySelector('#main').removeEventListener("wheel", wheelSpin)
+        mainObjs.placeShipsPlayer2()
         mainObjs.attackPlayer1()
     }
 }
@@ -270,42 +272,114 @@ function player2AttackShips() {
 // load()
 // load2()
 $(() => {
-    // const button = document.createElement('button')
-    // button.innerHTML = "toggle music"
-    // button.addEventListener("click", (() => {
-    //     //console.log($('#bgm')[0].paused)
-    //     if (!$('#bgm')[0].paused) {
-    //         $('#bgm')[0].pause()
-    //     }
-    //     else {
-    //         $('#bgm')[0].load()
-    //         $('#bgm')[0].play()
-    //     }
-    // }))
-    // document.body.append(button)
-    mainObjs.initPlayers()
-    mainObjs.initBoard()
-    mainObjs.placeShipsPlayer2()
-    mainObjs.PlaceShipsPlayer1()
-    Narrate("Place Your 5 ships")
+
+    $('#textscroll').hide()
+    $('h3').hide()
+    // mainObjs.initPlayers()
+    // mainObjs.initBoard()
+    // mainObjs.placeShipsPlayer2()
+    // mainObjs.PlaceShipsPlayer1()
+    // Narrate("Place Your 5 ships")
     $('#restart').on("click", restart)
+    $('#music').on("click", music)
+    $('#sound').on("click", sound)
+    $('.difficulty').on("click", startGame)
+    // var modal = document.getElementById("myModal");
 
+    // // Get the button that opens the modal
+    // var btn = document.getElementById("myBtn");
 
+    // // Get the <span> element that closes the modal
+    // var span = document.getElementsByClassName("close")[0];
+
+    // // When the user clicks the button, open the modal 
+    // btn.onclick = function() {
+    //   modal.style.display = "block";
+    // }
+
+    // // When the user clicks on <span> (x), close the modal
+    // span.onclick = function() {
+    //   modal.style.display = "none";
+    // }
+
+    // // When the user clicks anywhere outside of the modal, close it
+    // window.onclick = function(event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //   }
+    // }
 
 })
 
 function restart() {
+    $('body').css('background-image', 'url(img/backgroundwgeneralbanner.png)')
+    $('#options').show()
+    $('#textscroll').hide()
+    $('h3').hide()
 
     $('#main').empty()
     $("#enemyShips").empty()
     $("#ships").empty()
     shipNames.clearTakenNames()
 
+
+    //$('#textscroll').text("restart")
+
+}
+
+function music() {
+    console.log("music toggle")
+
+    if (backgroundMusic.paused === true) {
+        backgroundMusic.play()
+    }
+    else {
+        backgroundMusic.pause()
+    }
+
+}
+
+function sound() {
+    console.log("sound toggle")
+    if (!clickHover.muted) {
+        clickHover.muted = true
+        placeDrum.muted = true
+        gunfire1.muted = true
+        attackmissed.muted = true
+        victory.muted = true
+        defeat.muted = true
+        heartbeat.muted = true
+        genericBlip.muted = true
+        goodBlip.muted = true
+        badBlip.muted = true
+    }
+    else {
+        clickHover.muted = false
+        placeDrum.muted = false
+        gunfire1.muted = false
+        attackmissed.muted = false
+        victory.muted = false
+        defeat.muted = false
+        heartbeat.muted = false
+        genericBlip.muted = false
+        goodBlip.muted = false
+        badBlip.muted = false
+    }
+}
+
+function startGame() {
+    backgroundMusic.play()
+    console.log($(this).attr('mode'))
+    chosenDifficulty = $(this).attr('mode')
+    $('body').css('background-image', 'url(img/background.png)')
+    $('#options').hide()
+    $('#textscroll').show()
+    $('h3').show()
+    console.log("starting game")
     mainObjs.initPlayers()
     mainObjs.initBoard()
-    mainObjs.placeShipsPlayer2()
+
     mainObjs.PlaceShipsPlayer1()
-    //$('#textscroll').text("restart")
-    Narrate("Restarting now")
-    setTimeout(() => { Narrate("Place Your 5 ships") }, 1100)
+    Narrate("Place Your 5 ships", genericBlip)
+    //setTimeout(() => {  }, 1100)
 }

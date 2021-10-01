@@ -1,9 +1,13 @@
-#background {
+body {
     background-repeat: no-repeat;
     background-size: 100%;
     height: 100%;
+    background-image: url('/img/backgroundwgeneralbanner.png')
 }
 
+/* body {
+    height: 400px;
+} */
 
 .container {
     height: 80%;
@@ -18,8 +22,8 @@
 
 .grid {
     background-color: aqua;
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
     flex-flow: row wrap;
     border: 1px solid black;
     cursor: pointer;
@@ -54,8 +58,8 @@
 }
 .selected {
     border: 2px solid black;
-    height: 43px;
-    width: 43px;
+    height: 33px;
+    width: 33px;
 }
 
 .shipsegment {
@@ -79,7 +83,7 @@
     margin: 2px;
     padding: 2px;
     width: 150px;
-    height: 230px;
+    height: 210px;
     justify-content: center;
     text-align: center;
     background-color: rgba(100,12,255,0.5);
@@ -120,6 +124,8 @@ img {
     width: 100%;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 0px;
+    padding-top: 0px;
     
 }
 
@@ -138,7 +144,7 @@ img {
 
 #bottomRow {
     display: flex;
-    height: 360px;
+    height: 200px;
 }
 
 .damagedBar {
@@ -157,9 +163,10 @@ img {
       background-color: rgba(0,0,0,0.3);
       border: 2px solid black;
       padding-left: 30px;
-      height: 30px;
+      height: 37px;
       color: white;
-      font-size: 20px;
+      font-size: 23px;
+      margin-top: 33px;
   }
 
   .modal {
@@ -199,3 +206,21 @@ img {
     text-decoration: none;
     cursor: pointer;
   }
+
+  .options {
+      margin-top: 70px;
+      color: white;
+      width: 380px;
+      height: 60px;
+      background-color: black;
+      font-size: 30px;
+      cursor: pointer;
+  }
+
+  #options {
+      padding-top: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+

@@ -5,6 +5,8 @@ const difficulty = {
     debug: [5,5, 6,6]
 }
 
+let chosenDifficulty = ''
+
 const shipNames = {
     //pool of names which can be called for each ship
     availableNames: [
@@ -19,7 +21,6 @@ const shipNames = {
         'BRAVADO',
         'Aruba',
         'Jib n Tonic',
-        'Amiral Sallandrouze de Lamornaix',
         'Agios Georgios',
         'Brighton',
         'kartika',
@@ -812,11 +813,11 @@ function depletHealthBar(shipObj, damage) {
     }
 }
 
-function Narrate(stringToAdd, clearFlag = false) {
+function Narrate(stringToAdd, speakerSound = 1) {
     let narrateString = ""
     let nameLength = narrateString.length
     //document.querySelector("#narrate").value = narrateString
-    let textBox = setInterval(frame, 7);
+    let textBox = setInterval(frame, 14);
     function frame() {
         if (narrateString == (stringToAdd)) {
             clearInterval(textBox)
@@ -825,8 +826,12 @@ function Narrate(stringToAdd, clearFlag = false) {
         }
         //document.querySelector("#narrate").value = narrateString
         $('#textscroll').text(narrateString)
+        if (speakerSound !== 1) {
+            speakerSound.currentTime = 0
+            speakerSound.play()
+        }
     }
-    if (clearFlag) {
+    //if (clearFlag) {
         //setTimeout(()=> {$('#textscroll').text("")}, 1000)
-    }
+    //}
 }
