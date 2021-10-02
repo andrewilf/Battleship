@@ -37,5 +37,5 @@ Most of the visual features of this game were done with mostly vanilla javaScrip
 # Sources:
 - Sound FX: https://mixkit.co/
 - Background music: おもちゃのダンス @ フリ by DOVA-SYNDROME
-- Images: https://depositphotos.com/
+- Images: https://depositphotos.com/,
           https://www.istockphoto.com/
