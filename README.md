@@ -1,9 +1,9 @@
 # Battleship
-Battleship game
+Battleship game v 1.0
 
 Play game here: https://andrewilf.github.io/Battleship/
 
-Battleship is a turn based game where two players are trying to sink the opposing players fleet. Each player has 5 ships in their fleet of varying sizes and take turns to targets coordinates on the opponents board. Any time a player hit a segment of an opposing ship, they get to attack again. A ship is sunk when all parts of it have been hit by the opponent.
+Battleship is a turn based game where two players are trying to sink the opposing players fleet. Each player has 5 ships in their fleet of varying sizes and take turns to targets coordinates on the opponents board. Any time a player hits a segment of an opposing ship, they get to attack again. A ship is sunk when all parts of it have been hit by the opponent.
 
 Most of the visual features of this game were done with mostly vanilla javaScript and JQuery.
 
@@ -21,6 +21,8 @@ Most of the visual features of this game were done with mostly vanilla javaScrip
 - Preload all the fx and img assets at the start for better performance
 - Improve the CSS to work on multiple monitor sizes
 - Use BootStrap for better CSS
+- Increase sensitivity of the mouse wheel to rotate the ship
+- Better "About" page
 
 # Feature wish list:
 - front, middle, rear images to place for ship
@@ -34,5 +36,6 @@ Most of the visual features of this game were done with mostly vanilla javaScrip
 
 # Sources:
 - Sound FX: https://mixkit.co/
+- Background music: おもちゃのダンス @ フリ by DOVA-SYNDROME
 - Images: https://depositphotos.com/
-        https://www.istockphoto.com/
+          https://www.istockphoto.com/
