@@ -50,8 +50,9 @@ Battleship is a turn based game where two players are trying to sink the opposin
 
 # Patch Notes:
 
-- v 1.1: Audio edited to not destroy your eardrums if playing with headphones
-  "Interlude" version of the BGM plays while in the "ship placing" phase of the game
+v 1.1: 
+- Audio edited to not destroy your eardrums if playing with headphones
+- "Interlude" version of the BGM plays while in the "ship placing" phase of the game
 
 # Sources:
 
