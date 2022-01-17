@@ -38,6 +38,9 @@ const mainObjs = {
         //$('.' + player1.prefix).on("wheel", hoverOverPlacing)
     },
     placeShipsPlayer2: () => {
+        backgroundMusicInterlude.pause()
+        backgroundMusicInterlude.currentTime = 0
+        backgroundMusic.play()
         let success = false
         for (ship of this.player2.fleet) {
             console.log(ship)
@@ -373,7 +376,10 @@ function restart() {
     $("#ships").empty()
     shipNames.clearTakenNames()
     $('#cheat').hide()
-    
+    backgroundMusicInterlude.pause()
+    backgroundMusic.pause()
+    backgroundMusicInterlude.currentTime = 0
+    backgroundMusic.currentTime = 0
     //$('#textscroll').text("restart")
 
 }
@@ -381,7 +387,7 @@ function restart() {
 function music() {
     console.log("music toggle")
 
-    if (backgroundMusic.paused === true) {
+    if (backgroundMusic.paused === true && backgroundMusicInterlude.paused === true) {
         backgroundMusic.play()
     }
     else {
@@ -422,7 +428,9 @@ function sound() {
 
 function startGame() {
     $('#cheat').show()
-    backgroundMusic.play()
+    backgroundMusicInterlude.play()
+    backgroundMusic.pause()
+    backgroundMusic.currentTime = 0
     console.log($(this).attr('mode'))
     chosenDifficulty = $(this).attr('mode')
     $('body').css('background-image', 'url(img/background.png)')
@@ -460,6 +468,6 @@ function about() {
     $('#textscroll').show().css("width", "60%").css("height", "210px")
     Narrate("\
     Good morning sailor, my name is Admiral Not Bad Guy and welcome to Battleship. Your mission is to command my fleet of 5 vessels and stop Admiral Bad Guy. Place your 5 vessels anywhere in your fleet zone to begin the battle. You and the enemy will take turns to attack like gentlemen, you can only attack coordinates which haven’t been fired at yet. I will not have you wasting ammo. Should you or the enemy land a hit on an opposing vessel, you will be allowed to attack again. The battle ends when either you or that milk drinker’s entire fleet is destroyed. I am counting on you sailor, capitalism itself is at stake.\
-    ", genericBlip, 1)
+    ", 1, 5)
     $('#restart').text('Back')
 }

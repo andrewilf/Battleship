@@ -15,7 +15,7 @@ const goodBlip = new Audio('./fx/goodnarrate.wav')
 const badBlip = new Audio('./fx/enemynarrate.wav')
 
 const backgroundMusic = new Audio('./fx/pianobackgroundloop.mp3')
-const backgroundMusicInterlude = new Audio('./fx/pianobackgroundloop.mp3')
+const backgroundMusicInterlude = new Audio('./fx/pianobackgroundloopinterlude.mp3')
 
 backgroundMusic.loop = true
 backgroundMusicInterlude.loop = true
