@@ -1,13 +1,15 @@
 # Battleship
+
 Battleship game v 1.1
 
 Play game here: https://andrewilf.github.io/Battleship/
 
-This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices. 
+This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices.
 
 Should I ever wish to revisit this project, it would likely be rebuilt from scratch on a game engine however feel free to branch the code if for some reason you wish to improve it.
 
 # Game Rules
+
 Battleship is a turn based game where two players are trying to sink the opposing players fleet. Each player has five ships in their fleet of varying sizes and take turns to targets coordinates on the opponents board.
 
 - You start the game by placing your five ships on your grid to the left. Use the mouse wheel to rotate the ship 90 degrees.
@@ -17,11 +19,14 @@ Battleship is a turn based game where two players are trying to sink the opposin
 - The game continues until one player has sunk of five ships on the opposite site.
 - The opponent was programmed to attack randomly. Play on a higher difficulty to up the challenge.
 
-Easy Mode: You have a 8x8 board while your opponent has a 7x7 board.
-Medium Mode: You have a 7x7 board while your opponent has a 9x9 board.
-Hard Mode: You have a 6x6 board while your opponent has a 10x10 board.
+| Difficulty |  Player   |    Opponent |
+| ---------- | :-------: | ----------: |
+| Easy       | 8x8 board |   7x7 board |
+| Medium     | 7x7 board |   9x9 board |
+| Hard       | 6x6 board | 10x10 board |
 
 # Technologies used:
+
 - HTML
 - CSS
 - JavaScript
@@ -29,6 +34,7 @@ Hard Mode: You have a 6x6 board while your opponent has a 10x10 board.
 - JQueryUI
 
 # Areas to improve on/wish list:
+
 - Clean up class declarations
 - Use WebAudioAPI rather than Audio objects for better audio control
 - Preload all the fx and img assets at the start
@@ -43,11 +49,13 @@ Hard Mode: You have a 6x6 board while your opponent has a 10x10 board.
 - Hard code less aspects of the game
 
 # Patch Notes:
+
 - v 1.1: Audio edited to not destroy your eardrums if playing with headphones
-         "Interlude" version of the BGM plays while in the "ship placing" phase of the game
+  "Interlude" version of the BGM plays while in the "ship placing" phase of the game
 
 # Sources:
+
 - Sound FX: https://mixkit.co/
 - Background music: おもちゃのダンス @ フリ by DOVA-SYNDROME
 - Images: https://depositphotos.com/,
-          https://www.istockphoto.com/
+  https://www.istockphoto.com/
