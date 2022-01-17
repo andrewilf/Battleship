@@ -454,7 +454,7 @@ function startGame() {
     mainObjs.initBoard()
 
     mainObjs.PlaceShipsPlayer1()
-    Narrate("Place Your 5 ships", genericBlip)
+    Narrate("Place Your 5 ships. Use your mouse wheel to rotate the ship", genericBlip)
     //setTimeout(() => {  }, 1100)
 }
 
