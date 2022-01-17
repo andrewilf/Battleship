@@ -197,6 +197,8 @@ function AttackCell() {
                 //alert("game over, you win")
 
                 setTimeout(() => {
+                    backgroundMusic.pause()
+                    backgroundMusic.currentTime = 0
                     Narrate("Game over, you win!")
                     victory.currentTime = 0
                     victory.play()
@@ -272,6 +274,8 @@ function player2AttackShips() {
             console.log("game over, you lose")
 
             setTimeout(() => {
+                backgroundMusic.pause()
+                backgroundMusic.currentTime = 0
                 Narrate("game over, you lose")
                 defeat.play()
             }, 2000)
