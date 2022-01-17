@@ -1,5 +1,5 @@
 # Battleship
-Battleship game v 1.0
+Battleship game v 1.1
 
 Play game here: https://andrewilf.github.io/Battleship/
 
@@ -27,12 +27,15 @@ Most of the visual features of this game were done with mostly vanilla javaScrip
 # Feature wish list:
 - front, middle, rear images to place for ship
 - harder AI
-- better audio mixing
+- ~~better audio mixing~~
 - Have different game modes
 - Have an options menu using modal
-- Better art assets (though its pretty economical as it is)
 - Fix the errors which appear for the gh page version of the game
 - Hard-code less aspects of the game
+
+# Patch Notes:
+- v 1.1: Audio edited to not destroy your eardrums if playing with headphones
+         "Interlude" version of the BGM plays while in the "ship placing" phase of the game
 
 # Sources:
 - Sound FX: https://mixkit.co/

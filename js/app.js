@@ -461,7 +461,7 @@ function startGame() {
 let cheatFlag = false
 
 function cheat() {
-    if (!cheatFlag) {
+    if (!cheatFlag && !placingFlag) {
         $('.ship').addClass("revealShip")
         Narrate("Cheat mode activated! Click again to turn off.", genericBlip)
         cheatFlag = true
