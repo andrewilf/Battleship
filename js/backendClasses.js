@@ -54,11 +54,11 @@ const shipNames = {
         'Pyewacket',
         'Itamar',
         'Flow',
-        'ENCHANTRESS',
+        'ENCHANT',
         'Westmore',
         'Myrmidon',
         'Emily Rose',
-        'Leouardo Rodriguez',
+        'Rodriguez',
     ],
     //ship names which are taken are added to this array
     takenNames: [],
