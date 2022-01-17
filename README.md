@@ -1,8 +1,8 @@
 # Battleship
 
 Battleship game v 1.1
-
-Play game here: https://andrewilf.github.io/Battleship/
+![alt text](https://github.com/andrewilf/battleship/blob/main/img/backgroundwgeneralbanner.png?raw=true)
+Play here: https://andrewilf.github.io/Battleship/
 
 This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices.
 
@@ -59,4 +59,4 @@ v 1.1:
 - Sound FX: https://mixkit.co/
 - Background music: おもちゃのダンス @ フリ by DOVA-SYNDROME
 - Images: https://depositphotos.com/,
-  https://www.istockphoto.com/
+  https://www.istockphoto.com/, Microsoft Word 2003 WordArt (the best year)
