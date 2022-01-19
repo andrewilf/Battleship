@@ -46,6 +46,7 @@ Battleship is a turn based game where two players are trying to sink the opposin
 - Implement different game modes
 - Implement an options menu
 - Hard code less aspects of the game
+- Implement a button to rotate ships while placing them. Currently they can only be rotated by the mouse wheel making it impossible if played on mobile
 
 ## Patch Notes:
 
