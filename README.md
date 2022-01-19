@@ -1,8 +1,8 @@
 # Battleship game v 1.1
 
 ![alt text](https://github.com/andrewilf/battleship/blob/main/img/backgroundwgeneralbanner.png?raw=true)
-Play here: https://andrewilf.github.io/Battleship/
-**Note: For best experience, play it on Google Chrome, other browsers may have slight graphical or audio glitches**
+Play here: https://andrewilf.github.io/Battleship/  
+**Note: For best experience, play it on Google Chrome, other browsers may have slight graphical or audio glitches**  
 This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices.
 
 Should I ever wish to revisit this project, it would likely be rebuilt from scratch on a game engine however feel free to branch the code if for some reason you wish to improve it.
