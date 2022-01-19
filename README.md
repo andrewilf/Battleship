@@ -2,7 +2,7 @@
 
 ![alt text](https://github.com/andrewilf/battleship/blob/main/img/backgroundwgeneralbanner.png?raw=true)
 Play here: https://andrewilf.github.io/Battleship/
-
+**Note: For best experience, play it on Google Chrome, other browsers may have slight graphical or audio glitches**
 This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices.
 
 Should I ever wish to revisit this project, it would likely be rebuilt from scratch on a game engine however feel free to branch the code if for some reason you wish to improve it.
@@ -41,7 +41,7 @@ Battleship is a turn based game where two players are trying to sink the opposin
 - Increase sensitivity of the function for rotating ships
 - Better "About" page
 - Give ship sprites with a front, middle, and back segment
-- harder AI which attacks around areas they have landed successful hits
+- Create a harder AI which attacks around areas they have landed successful hits
 - ~~better audio mixing~~
 - Implement different game modes
 - Implement an options menu
