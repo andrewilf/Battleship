@@ -3,20 +3,22 @@
 ![alt text](https://github.com/andrewilf/battleship/blob/main/img/backgroundwgeneralbanner.png?raw=true)
 Play here: https://andrewilf.github.io/Battleship/  
 **Note: For best experience, play it on Google Chrome, other browsers may have slight graphical or audio glitches**  
-This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and thus is quite rough in its design with plenty of "janky" design choices.
+This project was made during a Software Engineering Immersive course by General Assembly. This was the first project during the course and is quite rough in its design, with plenty of "janky" design choices.
 
-Should I ever wish to revisit this project, it would likely be rebuilt from scratch on a game engine however feel free to branch the code if for some reason you wish to improve it.
+Should I ever wish to revisit this project, it would likely need to be rebuilt from scratch on a game engine. However feel free to branch the code if for some reason you wish to improve it.
 
 ## Game Rules
 
-Battleship is a turn based game where two players are trying to sink the opposing players fleet. Each player has five ships in their fleet of varying sizes and take turns to targets coordinates on the opponents board.
+Battleship is a turn-based game where two players are trying to sink the opposing player's fleet. Each player has five ships in their fleet of varying sizes and willl take turns to target coordinates on the opponent's board.
 
 - You start the game by placing your five ships on your grid to the left. Use the mouse wheel to rotate the ship 90 degrees.
-- After the ships are placed, you can click a tile on your opponents grid to the right to attack it. If you miss, it will be your opponents turn.
+- After all the ships are placed, you can click a tile on your opponent's grid to start the attack. If you miss, it will be your opponent's turn.
 - You cannot attack a coordinate which has already been attacked.
-- Any time a player hits a segment of an opposing ship, they get to attack again. A ship is sunk when all parts of it have been hit by the opponent.
-- The game continues until one player has sunk of five ships on the opposite site.
-- The opponent was programmed to attack randomly. Play on a higher difficulty to up the challenge.
+- Any time a player hits a segment of an opposing ship, they get to attack again. 
+- A ship is sunk when all parts of it have been hit by the opponent.
+- The game continues until one player has sunk all five ships on the opposite side.
+
+The opponent was programmed to attack randomly. Play on a higher difficulty to up the challenge.
 
 | Difficulty |  Player   |    Opponent |
 | ---------- | :-------: | ----------: |
